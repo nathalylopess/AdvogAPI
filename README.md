@@ -43,6 +43,6 @@ e ative o ambiente virtual
 
 6. Inicialize a aplicação via terminal:
 
-```bash
+   ```bash
     uvicorn app.main:app
-```
+   ```
