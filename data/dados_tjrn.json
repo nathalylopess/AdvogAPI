@@ -1,0 +1,170 @@
+[
+  {
+    "id": 1,
+    "unidade": "ACARI - VARA ÚNICA",
+    "acervo_total": "1.816",
+    "processos_em_tramitacao": {
+      "CONHECIMENTO": {
+        "Total": "854",
+        "+60 dias": "26",
+        "+100 dias": "2",
+        "Não julgados": {
+          "Total": "607",
+          "+60 dias": "20",
+          "+100 dias": "0"
+        }
+      },
+      "EXECUÇÃO": {
+        "Total": "549",
+        "+60 dias": "38",
+        "+100 dias": "3"
+      },
+      "EXECUÇÃO FISCAL": {
+        "Total": "17",
+        "+60 dias": "1",
+        "+100 dias": "0",
+        "Não julgados": {
+          "Total": "13",
+          "+60 dias": "0",
+          "+100 dias": "0"
+        }
+      },
+      "EXECUÇÃO CRIMINAL": {
+        "Total": "58",
+        "+60 dias": "2",
+        "+100 dias": "0"
+      },
+      "TOTAL": {
+        "Total": "1.478",
+        "+60 dias": "67",
+        "+100 dias": "5"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "unidade": "ALEXANDRIA - VARA ÚNICA",
+    "acervo_total": "2.325",
+    "processos_em_tramitacao": {
+      "CONHECIMENTO": {
+        "Total": "1.273",
+        "+60 dias": "23",
+        "+100 dias": "7",
+        "Não julgados": {
+          "Total": "961",
+          "+60 dias": "15",
+          "+100 dias": "3"
+        }
+      },
+      "EXECUÇÃO": {
+        "Total": "519",
+        "+60 dias": "14",
+        "+100 dias": "7"
+      },
+      "EXECUÇÃO FISCAL": {
+        "Total": "18",
+        "+60 dias": "1",
+        "+100 dias": "0",
+        "Não julgados": {
+          "Total": "17",
+          "+60 dias": "1",
+          "+100 dias": "0"
+        }
+      },
+      "EXECUÇÃO CRIMINAL": {
+        "Total": "98",
+        "+60 dias": "5",
+        "+100 dias": "1"
+      },
+      "TOTAL": {
+        "Total": "1.908",
+        "+60 dias": "43",
+        "+100 dias": "15"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "unidade": "ALMINO AFONSO - VARA ÚNICA",
+    "acervo_total": "2.261",
+    "processos_em_tramitacao": {
+      "CONHECIMENTO": {
+        "Total": "1.051",
+        "+60 dias": "78",
+        "+100 dias": "65",
+        "Não julgados": {
+          "Total": "812",
+          "+60 dias": "66",
+          "+100 dias": "45"
+        }
+      },
+      "EXECUÇÃO": {
+        "Total": "722",
+        "+60 dias": "64",
+        "+100 dias": "34"
+      },
+      "EXECUÇÃO FISCAL": {
+        "Total": "15",
+        "+60 dias": "0",
+        "+100 dias": "2",
+        "Não julgados": {
+          "Total": "12",
+          "+60 dias": "0",
+          "+100 dias": "2"
+        }
+      },
+      "EXECUÇÃO CRIMINAL": {
+        "Total": "110",
+        "+60 dias": "40",
+        "+100 dias": "0"
+      },
+      "TOTAL": {
+        "Total": "1.898",
+        "+60 dias": "182",
+        "+100 dias": "101"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "unidade": "ANGICOS - VARA ÚNICA",
+    "acervo_total": "3.694",
+    "processos_em_tramitacao": {
+      "CONHECIMENTO": {
+        "Total": "2.372",
+        "+60 dias": "58",
+        "+100 dias": "636",
+        "Não julgados": {
+          "Total": "1.939",
+          "+60 dias": "47",
+          "+100 dias": "587"
+        }
+      },
+      "EXECUÇÃO": {
+        "Total": "793",
+        "+60 dias": "8",
+        "+100 dias": "199"
+      },
+      "EXECUÇÃO FISCAL": {
+        "Total": "97",
+        "+60 dias": "3",
+        "+100 dias": "29",
+        "Não julgados": {
+          "Total": "75",
+          "+60 dias": "3",
+          "+100 dias": "25"
+        }
+      },
+      "EXECUÇÃO CRIMINAL": {
+        "Total": "48",
+        "+60 dias": "0",
+        "+100 dias": "2"
+      },
+      "TOTAL": {
+        "Total": "3.310",
+        "+60 dias": "69",
+        "+100 dias": "866"
+      }
+    }
+  }
+]
