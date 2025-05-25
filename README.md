@@ -10,31 +10,31 @@ API com webscraping integrado para capturar dados do sistema GPS-Jus do Tribunal
    
 3. Acesse o diretório do projeto:
    
-```cd AdvogAPI```
+   ```cd AdvogAPI```
 
 4. Configure um ambiente virtual (recomendado):
  
-```python -m venv venv```
+   ```python -m venv venv```
 
 e ative o ambiente virtual
 
   - No Windows:
     
-```bash
-.\venv\Scripts\Activate.ps1
-```
+   ```bash
+   .\venv\Scripts\Activate.ps1
+   ```
 
   - No Linux:
     
-```bash
-source venv/bin/activate
-```
+   ```bash
+   source venv/bin/activate
+   ```
 
 5. Instale as dependências necessárias:
 
-```bash
-    pip install -r requirements.txt
-```
+   ```bash
+       pip install -r requirements.txt
+   ```
 
 6. Inicialize a aplicação via terminal:
 
