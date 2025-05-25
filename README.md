@@ -33,7 +33,7 @@ e ative o ambiente virtual
 5. Instale as dependências necessárias:
 
    ```bash
-       pip install -r requirements.txt
+   pip install -r requirements.txt
    ```
 
 6. Inicialize a aplicação via terminal:
