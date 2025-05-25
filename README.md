@@ -5,23 +5,28 @@ API com webscraping integrado para capturar dados do sistema GPS-Jus do Tribunal
 ## Instalação
 1. Certifique-se de ter o Python instalado. Você pode baixar no site oficial [python.org](https://www.python.org/).
 2. Clone o repositório git:
-   
-   ```https://github.com/nathalylopess/AdvogAPI.git```
+   ```bash
+   https://github.com/nathalylopess/AdvogAPI.git
+   ```
    
 3. Acesse o diretório do projeto:
    
-   ```cd AdvogAPI```
+   ```bash
+   cd AdvogAPI
+   ```
 
-4. Configure um ambiente virtual (recomendado):
+5. Configure um ambiente virtual (recomendado):
  
-   ```python -m venv venv```
+   ```bash
+   python -m venv venv
+   ```
 
 e ative o ambiente virtual
 
   - No Windows:
     
    ```bash
-   .\venv\Scripts\Activate.ps1
+   venv\Scripts\activate
    ```
 
   - No Linux:
