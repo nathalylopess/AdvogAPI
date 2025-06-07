@@ -6,13 +6,13 @@ API com webscraping integrado para capturar dados do sistema GPS-Jus do Tribunal
 1. Certifique-se de ter o Python instalado. Você pode baixar no site oficial [python.org](https://www.python.org/).
 2. Clone o repositório git:
    ```bash
-   https://github.com/nathalylopess/AdvogAPI.git
+   https://github.com/camille-eloah/gpsjus-tjrn-webscraping.git
    ```
    
 3. Acesse o diretório do projeto:
    
    ```bash
-   cd AdvogAPI
+   cd gpsjus-tjrn-webscraping
    ```
 
 5. Configure um ambiente virtual (recomendado):

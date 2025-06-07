@@ -10,9 +10,10 @@ class DataService:
     def __init__(self, data_file: str = None):
         # Define o caminho base relativo ao arquivo atual
         base_dir = Path(__file__).parent.parent.parent  # Ajusta para a raiz do projeto
-        
+
         # Define o caminho padrão se não for fornecido
         self.data_file = base_dir / "data" / "dados_tjrn.json" if data_file is None else Path(data_file)
+        print(self.data_file)
         
         # Converte para caminho absoluto e resolve qualquer ./
         self.data_file = self.data_file.resolve()

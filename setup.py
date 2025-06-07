@@ -1,17 +1,13 @@
 from setuptools import setup, find_packages
 
+with open("requirements.txt") as f:
+    install_requires = f.read().splitlines()
+
 setup(
     name="tjrn_api",
     version="0.1.0",
     packages=find_packages(include=['app*']),
-    install_requires=[
-        # Dependências do requirements.txt
-        'fastapi',
-        'uvicorn',
-        'selenium',
-        'rich',
-        'pydantic'
-    ],
+    install_requires=install_requires,
     entry_points={
         'console_scripts': [
             'tjrn-scraper=app.scripts.run_scraper:main',
