@@ -7,40 +7,61 @@ from rich.console import Console
 console = Console()
 
 class DataService:
-    def __init__(self, data_file: str = None):
+    def __init__(self, data_file: str = None, auto_load: bool = False):
+        """
+        Inicializa o serviço de dados
+        
+        Args:
+            data_file: Caminho customizado para o arquivo de dados
+            auto_load: Se True, carrega os dados automaticamente na inicialização
+        """
         # Define o caminho base relativo ao arquivo atual
         base_dir = Path(__file__).parent.parent.parent  # Ajusta para a raiz do projeto
 
         # Define o caminho padrão se não for fornecido
         self.data_file = base_dir / "data" / "dados_tjrn.json" if data_file is None else Path(data_file)
-        print(self.data_file)
         
         # Converte para caminho absoluto e resolve qualquer ./
         self.data_file = self.data_file.resolve()
         
-        self.data = self.load_data()
+        self.data = []
+        if auto_load:
+            self.load_data()
+        
         self.debug_file_path()  # Mostra informações de debug ao inicializar
     
     def load_data(self) -> List[Dict]:
+        """Carrega os dados do arquivo JSON"""
         try:
             if not self.data_file.exists():
                 console.print(f"[yellow]⚠ Arquivo não encontrado: {self.data_file}[/]")
-                return []
+                self.data = []
+                return self.data
                 
             with open(self.data_file, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 if not data:
                     console.print("[yellow]⚠ Arquivo vazio ou sem dados válidos[/]")
-                return data
+                self.data = data
+                return self.data
                 
         except json.JSONDecodeError as e:
             console.print(f"[red]❌ Erro ao decodificar JSON: {str(e)}[/]")
-            return []
+            self.data = []
+            return self.data
         except Exception as e:
             console.print(f"[red]❌ Erro inesperado: {str(e)}[/]")
-            return []
+            self.data = []
+            return self.data
     
-    def save_data(self, data: List[Dict]):
+    def save_data(self, data: List[Dict], auto_load: bool = True):
+        """
+        Salva os dados no arquivo JSON
+        
+        Args:
+            data: Dados a serem salvos
+            auto_load: Se True, carrega os dados após salvar
+        """
         try:
             # Cria o diretório se não existir
             self.data_file.parent.mkdir(parents=True, exist_ok=True)
@@ -50,6 +71,10 @@ class DataService:
                 
             console.print(f"[green]✓ Dados salvos em: {self.data_file}[/]")
             
+            if auto_load:
+                self.data = data  # Atualiza os dados em memória sem ler do arquivo
+                # Alternativa: self.load_data() se quiser ler do arquivo
+                
         except Exception as e:
             console.print(f"[red]❌ Falha ao salvar dados: {str(e)}[/]")
             raise

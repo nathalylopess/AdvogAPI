@@ -35,8 +35,8 @@ class TJRNScraper:
             data = []
             max_range = len(options) if max_units is None else min(max_units + 1, len(options))
             
-            for index in track(range(1, max_range), description="📊 Coletando dados..."):
-            # for index in track(range(1, 5), description="📊 Coletando dados..."): # Apenas 4 iterações para testar
+            #for index in track(range(1, max_range), description="📊 Coletando dados..."):
+            for index in track(range(1, 3), description="📊 Coletando dados..."): # Apenas 4 iterações para testar
                 try:
                     unit_data = self._process_unit(index)
                     if unit_data:
