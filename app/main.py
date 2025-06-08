@@ -24,7 +24,7 @@ app.include_router(api_router)
 @app.on_event("startup")
 async def startup_event():
     """Carrega os dados ao iniciar a aplicação"""
-    service = DataService()
+    service = DataService(auto_load=True)
     if not service.data:
         print("⚠ Nenhum dado encontrado. Execute o scraper primeiro.")
 

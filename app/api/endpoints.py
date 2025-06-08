@@ -14,7 +14,7 @@ router = APIRouter(
 logger = logging.getLogger(__name__)
 
 def get_data_service():
-    return DataService()
+    return DataService(auto_load=True)
 
 def _transform_process_data(process_data: Dict) -> Dict:
     """Transforma os dados brutos dos processos para o formato do schema"""
