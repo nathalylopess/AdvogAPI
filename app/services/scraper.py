@@ -1,28 +1,115 @@
+import json
+import os
+import shutil
+import tempfile
+import atexit
+from typing import List, Dict, Optional, Union
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import (StaleElementReferenceException, 
+                                      TimeoutException,
+                                      WebDriverException)
+from selenium.webdriver import Remote
 from rich.console import Console
 from rich.progress import track
-import json
-
-from selenium.common.exceptions import StaleElementReferenceException, TimeoutException
 
 console = Console()
 
 class TJRNScraper:
-    def __init__(self, headless=True):
+    def __init__(self, headless: bool = True) -> None:
+        """
+        Inicializa o scraper do TJRN.
+        
+        Args:
+            headless (bool): Se True, executa o navegador em modo headless.
+        """
+        self.headless = headless
+        self._setup_driver()
+        if not hasattr(self, 'driver') or self.driver is None:
+            raise RuntimeError("❌ Falha ao inicializar o WebDriver.")
+        self.base_url = "https://gpsjus.tjrn.jus.br/1grau_gerencial_publico.php"
+        atexit.register(self.cleanup)
+
+    def _setup_driver(self) -> None:
+        """Configura o WebDriver do Chrome."""
+        self._setup_chrome_options()
+        self._setup_temp_directory()
+        self._initialize_driver()
+        self.wait = WebDriverWait(self.driver, 15)
+
+    def _setup_chrome_options(self) -> None:
+        """Configura as opções do Chrome."""
         self.options = webdriver.ChromeOptions()
+        
+        # Configurações básicas
         self.options.add_argument('--no-sandbox')
         self.options.add_argument('--disable-dev-shm-usage')
         self.options.add_argument('--disable-gpu')
-        if headless:
-            self.options.add_argument('--headless=new')  # Nova sintaxe para headless
-        self.driver = webdriver.Chrome(options=self.options)
-        self.base_url = "https://gpsjus.tjrn.jus.br/1grau_gerencial_publico.php"
-        self.wait = WebDriverWait(self.driver, 15) 
+        
+        if self.headless:
+            self.options.add_argument('--headless=new')
+        
+        # Configurações para evitar detecção como bot
+        self.options.add_argument('--disable-blink-features=AutomationControlled')
+        self.options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        self.options.add_experimental_option('useAutomationExtension', False)
+        
+        # Configurações de desempenho
+        self.options.add_argument('--disable-application-cache')
+        self.options.add_argument('--disable-extensions')
+        self.options.add_argument('--disable-infobars')
+        self.options.add_argument('--remote-debugging-port=9222')
 
-    def fetch_data(self, max_units=None):
+    def _setup_temp_directory(self) -> None:
+        """Configura o diretório temporário para o perfil do Chrome."""
+        self.user_data_dir = os.path.join(tempfile.gettempdir(), f'chrome_{os.getpid()}')
+        self._cleanup_old_sessions()
+        self.options.add_argument(f'--user-data-dir={self.user_data_dir}')
+
+    def _cleanup_old_sessions(self) -> None:
+        """Limpa sessões antigas do Chrome."""
+        try:
+            # Para sistemas Unix/Linux
+            os.system("pkill -f chrome")
+            os.system("pkill -f chromedriver")
+
+            # Limpa diretórios temporários antigos
+            temp_dir = tempfile.gettempdir()
+            for item in os.listdir(temp_dir):
+                if item.startswith('chrome_'):
+                    try:
+                        shutil.rmtree(os.path.join(temp_dir, item))
+                    except Exception as e:
+                        console.print(f"[yellow]⚠️ Falha ao limpar {item}: {str(e)}[/]")
+        except Exception as e:
+            console.print(f"[red]❌ Erro durante a limpeza de sessões antigas: {str(e)}[/]")
+
+    def _initialize_driver(self) -> None:
+        """Inicializa o WebDriver."""
+        try:
+            self.driver = Remote(
+            command_executor=os.getenv("SELENIUM_REMOTE_URL", "http://chrome:4444/wd/hub"),
+            options=self.options
+)
+            self.driver.set_page_load_timeout(30)
+        except WebDriverException as e:
+            console.print(f"[bold red]❌ Falha ao iniciar o WebDriver: {str(e)}[/]")
+            raise e  
+
+    def fetch_data(self, max_units: Optional[int] = None) -> List[Dict[str, Union[str, int]]]:
+        """
+        Coleta dados das unidades judiciais.
+        
+        Args:
+            max_units (int, optional): Número máximo de unidades a serem processadas.
+            
+        Returns:
+            List[Dict]: Lista contendo os dados coletados de cada unidade.
+        """
+        try:
             self.driver.get(self.base_url)
             self._wait_for_page_load()
             
@@ -34,21 +121,22 @@ class TJRNScraper:
             
             data = []
             max_range = len(options) if max_units is None else min(max_units + 1, len(options))
-            
+
+            #for index in track(range(1, 4), description="📊 Coletando dados..."): # teste            
             for index in track(range(1, max_range), description="📊 Coletando dados..."):
-            #for index in track(range(1, 5), description="📊 Coletando dados..."): # Apenas 4 iterações para testar
                 try:
                     unit_data = self._process_unit(index)
                     if unit_data:
                         data.append(unit_data)
                 except Exception as e:
                     console.print(f"[bold red]❌ Erro ao processar a unidade {index}: {str(e)}[/]")
-                    # Tenta recarregar a página se falhar
-                    self.driver.get(self.base_url)
-                    self._wait_for_page_load()
+                    self._recover_from_error()
             
-            self.driver.quit()
             return data
+        
+        finally:
+            self.driver.quit()
+
     def _wait_for_page_load(self):
         """Espera até que a página tenha terminado de carregar completamente"""
         self.wait.until(lambda d: d.execute_script('return document.readyState') == 'complete')
@@ -112,9 +200,13 @@ class TJRNScraper:
 
     def _get_acervo(self):
         try:
-            acervo_element = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, 
-                "//h3[text()='Acervo']/following-sibling::div[@class='box-rounded']/a/div[@class='big']"))
+            acervo_element = self.wait_for_selenium(
+                EC.presence_of_element_located((
+                    By.XPATH, 
+                    "//h3[text()='Acervo']/following-sibling::div[@class='box-rounded']/a/div[@class='big']"
+                )),
+                timeout=10,
+                error_msg="Elemento do acervo não encontrado"
             )
             return acervo_element.text.strip()
         except:
@@ -130,11 +222,15 @@ class TJRNScraper:
         }
         
         try:
-            table = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, 
-                "//h4[contains(text(), 'Processos em tramitação')]/following::table[1]"))
+            table = self.wait_for_selenium(
+                EC.presence_of_element_located((
+                    By.XPATH, 
+                    "//h4[contains(text(), 'Processos em tramitação')]/following::table[1]"
+                )),
+                timeout=10,
+                error_msg="Tabela de processos em tramitação não encontrada"
             )
-            
+
             rows = table.find_elements(By.TAG_NAME, "tr")
             current_category = None
             
@@ -180,3 +276,46 @@ class TJRNScraper:
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
         console.print(f"\n[bold magenta]✅ Dados salvos em '{filename}'.[/]\n")
+
+    def cleanup(self) -> None:
+        """Limpeza final."""
+        try:
+            if hasattr(self, 'driver') and self.driver:
+                self.driver.quit()
+        except:
+            pass
+        
+        try:
+            shutil.rmtree(self.user_data_dir, ignore_errors=True)
+        except:
+            pass
+
+    def _recover_from_error(self) -> None:
+        """Tenta recuperar de um erro."""
+        try:
+            self.driver.refresh()
+            self._wait_for_page_load()
+        except:
+            try:
+                self.driver.get(self.base_url)
+                self._wait_for_page_load()
+            except Exception as e:
+                console.print(f"[red]❌ Falha na recuperação: {str(e)}[/]")
+                raise
+
+    def wait_for_selenium(self, condition, timeout=10, error_msg="Timeout waiting for condition"):
+        """
+        Aguarda uma condição do Selenium com tratamento de exceções.
+        
+        Args:
+            condition: Condição do WebDriverWait (ex: EC.presence_of_element_located).
+            timeout (int): Tempo máximo de espera em segundos.
+            error_msg (str): Mensagem de erro em caso de falha.
+        Returns:
+            O resultado da condição esperada, ou levanta TimeoutException.
+        """
+        try:
+            return WebDriverWait(self.driver, timeout).until(condition)
+        except TimeoutException:
+            console.print(f"[bold yellow]⚠ {error_msg}[/]")
+            raise

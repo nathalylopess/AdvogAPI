@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment: 
+      - PYTHONPATH=/app
+
+  chrome:
+    image: selenium/standalone-chrome
+    ports:
+      - "4444:4444"
+
+  scraper:
+    build: .
+    command: python -m app.scripts.run_scraper
+    volumes:
+      - .:/app
+    privileged: true
+    depends_on:
+      - api
+      - chrome
+    environment: 
+      - SELENIUM_REMOTE_URL=http://chrome:4444/wd/hub
+    tmpfs:
+      - /tmp
+    entrypoint: ["./wait-for-it.sh", "chrome:4444", "--strict", "--timeout=30", "--", "python", "-m", "app.scripts.run_scraper"]
