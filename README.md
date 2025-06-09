@@ -23,7 +23,8 @@ docker compose up --build
 
 4. Nas próximas vezes que for levantar o container, execute apenas com o comando abaixo
 ```bash
-docker compose up```
+docker compose up
+```
 
 ### Manual
 1. Certifique-se de ter o Python instalado. Você pode baixar no site oficial [python.org](https://www.python.org/).
