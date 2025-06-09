@@ -27,14 +27,23 @@ docker compose up
 ```
 
 ### Manual
-1. Certifique-se de ter o Python instalado. Você pode baixar no site oficial [python.org](https://www.python.org/).
-2. Clone o repositório git e acesse o diretório do projeto:
+***Pré-requisitos:***
+* Google Chrome
+* Chrome Driver
+* Python 3.9 ou superior
+  
+1. Verifique se o Python está instalado. Você pode baixar no site oficial [python.org](https://www.python.org/).
+   ```bash
+   python --version
+   ```
+   
+3. Clone o repositório git e acesse o diretório do projeto:
    ```bash
    https://github.com/nathalylopess/AdvogAPI.git
    cd AdvogAPI
    ```
 
-3. Configure um ambiente virtual (recomendado):
+4. Configure um ambiente virtual (recomendado):
  
    ```bash
    python -m venv venv
