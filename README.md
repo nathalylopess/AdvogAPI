@@ -3,6 +3,10 @@
 API com webscraping integrado para capturar dados do sistema GPS-Jus do Tribunal de Justiça do Rio Grande do Norte (TJRN) (https://gpsjus.tjrn.jus.br/1grau_gerencial_publico.php).
 
 ## Instalação
+### Dockerfile
+
+
+### Manual
 1. Certifique-se de ter o Python instalado. Você pode baixar no site oficial [python.org](https://www.python.org/).
 2. Clone o repositório git:
    ```bash
@@ -46,3 +50,9 @@ e ative o ambiente virtual
    ```bash
     uvicorn app.main:app
    ```
+
+7. Caso queira obter os dados atualizados, execute o web scraper para iniciar a coleta:
+   ```bash
+   python -m app.scripts.run_scraper
+   ```
+      
