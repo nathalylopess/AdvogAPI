@@ -240,3 +240,27 @@ async def get_controle_de_prisoes(
     except Exception as e:
         logger.error(f"Erro ao processar controle de prisões da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar controle de prisões da unidade {unit_id}")
+    
+@router.get(
+    "/unidades/{unit_id}/controle_de_diligencias",
+    summary="Controle de diligências de uma unidade específica",
+    description="Retorna os dados da tabela de Controle de Diligências (PJe) da unidade especificada"
+)
+async def get_controle_de_diligencias_unidade(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+        controle = unit.get("controle_de_diligencias")
+
+        if controle is None:
+            raise HTTPException(404, f"Controle de diligências não encontrado para a unidade {unit_id}")
+
+        return JSONResponse(content=controle)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar controle de diligências da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar controle de diligências da unidade {unit_id}")

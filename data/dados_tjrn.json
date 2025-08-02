@@ -124,6 +124,12 @@
     "controle_de_prisoes": {
       "Não identificada": "6",
       "Total": "6"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "62",
+      "COJUD": "39",
+      "INQUÉRITO REMETIDO AO MP": "7",
+      "Total": "108"
     }
   },
   {
@@ -251,6 +257,12 @@
     "controle_de_prisoes": {
       "Não identificada": "5",
       "Total": "5"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "57",
+      "COJUD": "219",
+      "INQUÉRITO REMETIDO AO MP": "30",
+      "Total": "306"
     }
   },
   {
@@ -378,6 +390,12 @@
     "controle_de_prisoes": {
       "Não identificada": "1",
       "Total": "1"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "57",
+      "COJUD": "40",
+      "INQUÉRITO REMETIDO AO MP": "27",
+      "Total": "124"
     }
   },
   {
@@ -505,6 +523,12 @@
     "controle_de_prisoes": {
       "Não identificada": "6",
       "Total": "6"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "29",
+      "COJUD": "2",
+      "INQUÉRITO REMETIDO AO MP": "7",
+      "Total": "38"
     }
   }
 ]

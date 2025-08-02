@@ -61,6 +61,12 @@ class ControleDePrisoes(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+class ControleDeDiligenciasItem(BaseModel):
+    total: str = Field(..., alias="Total", example="62")
+
+    class Config:
+        allow_population_by_field_name = True
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -143,6 +149,22 @@ class UnidadeData(BaseModel):
             },
             "Temporária": {
                 "Total": "3"
+            }
+        }
+    )
+
+    controle_de_diligencias: Optional[Dict[str, ControleDeDiligenciasItem]] = Field(
+        None,
+        description="Dados da tabela de Controle de Diligências (PJe)",
+        example={
+            "Aguardando Perícia, Laudo Técnico ou Outros": {
+                "Total": "62"
+            },
+            "COJUD": {
+                "Total": "39"
+            },
+            "INQUÉRITO REMETIDO AO MP": {
+                "Total": "7"
             }
         }
     )
