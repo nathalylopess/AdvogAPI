@@ -66,6 +66,38 @@
         "+60 dias": "7",
         "+100 dias": "0"
       }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "18",
+        "+60 dias": "0",
+        "+100 dias": "14",
+        "+730 dias": "4"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "0",
+        "+60 dias": "0",
+        "+100 dias": "0",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "42",
+        "+60 dias": "0",
+        "+100 dias": "29",
+        "+730 dias": "11"
+      },
+      "Outros Motivos": {
+        "Total": "197",
+        "+60 dias": "16",
+        "+100 dias": "115",
+        "+730 dias": "38"
+      },
+      "TOTAL": {
+        "Total": "257",
+        "+60 dias": "16",
+        "+100 dias": "158",
+        "+730 dias": "53"
+      }
     }
   },
   {
@@ -134,6 +166,38 @@
         "Total": "92",
         "+60 dias": "3",
         "+100 dias": "0"
+      }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "21",
+        "+60 dias": "4",
+        "+100 dias": "16",
+        "+730 dias": "0"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "10",
+        "+60 dias": "0",
+        "+100 dias": "10",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "46",
+        "+60 dias": "2",
+        "+100 dias": "40",
+        "+730 dias": "0"
+      },
+      "Outros Motivos": {
+        "Total": "272",
+        "+60 dias": "21",
+        "+100 dias": "205",
+        "+730 dias": "5"
+      },
+      "TOTAL": {
+        "Total": "349",
+        "+60 dias": "27",
+        "+100 dias": "271",
+        "+730 dias": "5"
       }
     }
   },
@@ -204,6 +268,38 @@
         "+60 dias": "12",
         "+100 dias": "27"
       }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "33",
+        "+60 dias": "2",
+        "+100 dias": "29",
+        "+730 dias": "0"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "0",
+        "+60 dias": "0",
+        "+100 dias": "0",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "47",
+        "+60 dias": "2",
+        "+100 dias": "43",
+        "+730 dias": "0"
+      },
+      "Outros Motivos": {
+        "Total": "207",
+        "+60 dias": "23",
+        "+100 dias": "127",
+        "+730 dias": "17"
+      },
+      "TOTAL": {
+        "Total": "287",
+        "+60 dias": "27",
+        "+100 dias": "199",
+        "+730 dias": "17"
+      }
     }
   },
   {
@@ -272,6 +368,38 @@
         "Total": "184",
         "+60 dias": "27",
         "+100 dias": "9"
+      }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "38",
+        "+60 dias": "0",
+        "+100 dias": "12",
+        "+730 dias": "0"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "0",
+        "+60 dias": "0",
+        "+100 dias": "0",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "8",
+        "+60 dias": "0",
+        "+100 dias": "7",
+        "+730 dias": "0"
+      },
+      "Outros Motivos": {
+        "Total": "198",
+        "+60 dias": "13",
+        "+100 dias": "126",
+        "+730 dias": "35"
+      },
+      "TOTAL": {
+        "Total": "244",
+        "+60 dias": "13",
+        "+100 dias": "145",
+        "+730 dias": "35"
       }
     }
   }

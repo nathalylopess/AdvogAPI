@@ -137,3 +137,27 @@ async def get_procedimentos_unidade(
     except Exception as e:
         logger.error(f"Erro ao processar procedimentos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar procedimentos da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/suspensos",
+    summary="Suspensos / Arquivo provisório de uma unidade específica",
+    description="Retorna os dados de processos suspensos ou em arquivo provisório de uma unidade judiciária"
+)
+async def get_suspensos_arquivo_provisorio_unidade(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+
+        suspensos = unit.get("suspensos_arquivo_provisorio")
+        if suspensos is None:
+            raise HTTPException(404, f"Nenhum dado de suspensos/arquivo provisório encontrado para a unidade {unit_id}")
+
+        return JSONResponse(content=suspensos)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar dados de suspensos da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar dados de suspensos da unidade {unit_id}")

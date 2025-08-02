@@ -50,6 +50,9 @@ def process_unit(scraper, index: int) -> Dict:
         console.print("[green]✔ Chamando get_procedimentos_e_peticoes_em_tramitacao()[/]")
         procedimentos = get_procedimentos_e_peticoes_em_tramitacao(scraper)
 
+        console.print("[green]✔ Chamando get_suspensos_arquivo_provisorio()[/]")
+        suspensos_arquivo_provisorio = get_suspensos_arquivo_provisorio(scraper)
+
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
 
         return {
@@ -57,7 +60,8 @@ def process_unit(scraper, index: int) -> Dict:
             "unidade": unidade,
             "acervo_total": acervo,
             "processos_em_tramitacao": processos,
-            "procedimentos_e_peticoes_em_tramitacao": procedimentos
+            "procedimentos_e_peticoes_em_tramitacao": procedimentos,
+            "suspensos_arquivo_provisorio": suspensos_arquivo_provisorio
         }
 
     except StaleElementReferenceException:
@@ -187,6 +191,43 @@ def get_procedimentos_e_peticoes_em_tramitacao(scraper) -> Dict:
         console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Procedimentos e petições em tramitação'. Erro: {str(e)}")
 
     return procedimentos
+
+def get_suspensos_arquivo_provisorio(scraper) -> Dict:
+    """
+    Coleta os dados da tabela "Suspensos / Arquivo provisório".
+    Retorna um dicionário com os dados categorizados.
+    """
+    dados = {}
+
+    try:
+        # Localiza a tabela com base no título anterior a ela
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//h4[contains(text(), 'Suspensos / Arquivo provisório')]/following::table[1]"
+            )),
+            timeout=10,
+            error_msg="Tabela 'Suspensos / Arquivo provisório' não encontrada"
+        )
+
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        for row in rows:
+            cells = row.find_elements(By.TAG_NAME, "td")
+            if len(cells) == 5:
+                categoria = cells[0].text.strip()
+                dados[categoria] = {
+                    "Total": cells[1].text.strip(),
+                    "+60 dias": cells[2].text.strip(),
+                    "+100 dias": cells[3].text.strip(),
+                    "+730 dias": cells[4].text.strip()
+                }
+
+    except Exception as e:
+        console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Suspensos / Arquivo provisório'. Erro: {str(e)}")
+
+    return dados
 
 def parse_processos_data(cells) -> Dict:
     return {

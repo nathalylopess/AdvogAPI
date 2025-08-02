@@ -37,7 +37,16 @@ class ProcedimentoPeticao(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-        
+
+class SuspensosArquivoProvisorioItem(BaseModel):
+    total: str = Field(..., alias="Total", example="18")
+    mais_60_dias: str = Field(..., alias="+60 dias", example="0")
+    mais_100_dias: str = Field(..., alias="+100 dias", example="14")
+    mais_730_dias: str = Field(..., alias="+730 dias", example="4")
+
+    class Config:
+        allow_population_by_field_name = True
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -61,6 +70,24 @@ class UnidadeData(BaseModel):
         None,
         alias="procedimentos_e_peticoes_em_tramitacao",
         description="Dados dos procedimentos e petições em tramitação"
+    )
+    suspensos_arquivo_provisorio: Optional[Dict[str, SuspensosArquivoProvisorioItem]] = Field(
+        None,
+        description="Dados da tabela de Suspensos / Arquivo provisório",
+        example={
+            "Recurso Especial Repetitivo": {
+                "Total": "18",
+                "+60 dias": "0",
+                "+100 dias": "14",
+                "+730 dias": "4"
+            },
+            "Outros Motivos": {
+                "Total": "197",
+                "+60 dias": "16",
+                "+100 dias": "115",
+                "+730 dias": "38"
+            }
+        }
     )
 
     class Config:
