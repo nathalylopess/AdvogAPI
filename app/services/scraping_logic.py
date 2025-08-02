@@ -47,13 +47,17 @@ def process_unit(scraper, index: int) -> Dict:
         console.print("[green]✔ Chamando get_processos_em_tramitacao()[/]")
         processos = get_processos_em_tramitacao(scraper)
 
+        console.print("[green]✔ Chamando get_procedimentos_e_peticoes_em_tramitacao()[/]")
+        procedimentos = get_procedimentos_e_peticoes_em_tramitacao(scraper)
+
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
 
         return {
             "id": index,
             "unidade": unidade,
             "acervo_total": acervo,
-            "processos_em_tramitacao": processos
+            "processos_em_tramitacao": processos,
+            "procedimentos_e_peticoes_em_tramitacao": procedimentos
         }
 
     except StaleElementReferenceException:
@@ -109,7 +113,7 @@ def get_processos_em_tramitacao(scraper) -> Dict:
             error_msg="Tabela de processos em tramitação não encontrada"
         )
 
-        debug_log_table_html(table)
+        # debug_log_table_html(table)
 
         rows = table.find_elements(By.TAG_NAME, "tr")
         current_category = None
@@ -145,6 +149,44 @@ def get_processos_em_tramitacao(scraper) -> Dict:
 
     return processos
 
+def get_procedimentos_e_peticoes_em_tramitacao(scraper) -> Dict:
+    procedimentos = {}
+
+    try:
+        # Espera o elemento <h4> específico e captura a tabela logo após
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//h4[text()='Procedimentos e petições em tramitação']/following::table[1]"
+            )),
+            timeout=10,
+            error_msg="Tabela de procedimentos e petições em tramitação não encontrada"
+        )
+
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        # Itera nas linhas, pulando o cabeçalho (thead) e rodapé (tfoot)
+        for row in rows:
+            cells = row.find_elements(By.TAG_NAME, "td")
+
+            # As linhas de dados devem ter 4 células: nome + 3 valores
+            if len(cells) == 4:
+                nome = cells[0].text.strip()
+                total = cells[1].text.strip()
+                mais_60 = cells[2].text.strip()
+                mais_100 = cells[3].text.strip()
+
+                procedimentos[nome] = {
+                    "Total": total,
+                    "+60 dias": mais_60,
+                    "+100 dias": mais_100
+                }
+
+    except Exception as e:
+        console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Procedimentos e petições em tramitação'. Erro: {str(e)}")
+
+    return procedimentos
 
 def parse_processos_data(cells) -> Dict:
     return {

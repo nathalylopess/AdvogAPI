@@ -30,6 +30,14 @@ class ProcessosTramitacao(BaseModel):
             "mais_100_dias": lambda v: str(v)
         }
 
+class ProcedimentoPeticao(BaseModel):
+    total: str = Field(..., example="77", alias="Total")
+    mais_60_dias: str = Field(..., example="6", alias="+60 dias")
+    mais_100_dias: str = Field(..., example="0", alias="+100 dias")
+
+    class Config:
+        allow_population_by_field_name = True
+        
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -48,6 +56,11 @@ class UnidadeData(BaseModel):
                 }
             }
         }
+    )
+    procedimentos_e_peticoes_em_tramitacao: Optional[Dict[str, ProcedimentoPeticao]] = Field(
+        None,
+        alias="procedimentos_e_peticoes_em_tramitacao",
+        description="Dados dos procedimentos e petições em tramitação"
     )
 
     class Config:

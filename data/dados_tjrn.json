@@ -7,16 +7,16 @@
       "CONHECIMENTO": {
         "Total": "859",
         "+60 dias": "49",
-        "+100 dias": "0",
+        "+100 dias": "1",
         "Não julgados": {
           "Total": "615",
           "+60 dias": "42",
-          "+100 dias": "0"
+          "+100 dias": "1"
         }
       },
       "EXECUÇÃO": {
         "Total": "556",
-        "+60 dias": "46",
+        "+60 dias": "47",
         "+100 dias": "4"
       },
       "EXECUÇÃO FISCAL": {
@@ -36,23 +36,50 @@
       },
       "TOTAL": {
         "Total": "1.491",
-        "+60 dias": "96",
-        "+100 dias": "4"
+        "+60 dias": "97",
+        "+100 dias": "5"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "2",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Inquérito Policial": {
+        "Total": "30",
+        "+60 dias": "1",
+        "+100 dias": "0"
+      },
+      "Cartas": {
+        "Total": "12",
+        "+60 dias": "2",
+        "+100 dias": "0"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "33",
+        "+60 dias": "4",
+        "+100 dias": "0"
+      },
+      "TOTAL": {
+        "Total": "77",
+        "+60 dias": "7",
+        "+100 dias": "0"
       }
     }
   },
   {
     "id": 2,
     "unidade": "ALEXANDRIA - VARA ÚNICA",
-    "acervo_total": "2.399",
+    "acervo_total": "2.401",
     "processos_em_tramitacao": {
       "CONHECIMENTO": {
-        "Total": "1.265",
-        "+60 dias": "10",
+        "Total": "1.267",
+        "+60 dias": "15",
         "+100 dias": "4",
         "Não julgados": {
           "Total": "904",
-          "+60 dias": "9",
+          "+60 dias": "14",
           "+100 dias": "4"
         }
       },
@@ -77,31 +104,58 @@
         "+100 dias": "1"
       },
       "TOTAL": {
-        "Total": "1.958",
-        "+60 dias": "22",
+        "Total": "1.960",
+        "+60 dias": "27",
         "+100 dias": "7"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "22",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Inquérito Policial": {
+        "Total": "6",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Cartas": {
+        "Total": "34",
+        "+60 dias": "3",
+        "+100 dias": "0"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "30",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "TOTAL": {
+        "Total": "92",
+        "+60 dias": "3",
+        "+100 dias": "0"
       }
     }
   },
   {
     "id": 3,
     "unidade": "ALMINO AFONSO - VARA ÚNICA",
-    "acervo_total": "2.197",
+    "acervo_total": "2.198",
     "processos_em_tramitacao": {
       "CONHECIMENTO": {
-        "Total": "1.033",
-        "+60 dias": "84",
-        "+100 dias": "97",
+        "Total": "1.034",
+        "+60 dias": "86",
+        "+100 dias": "99",
         "Não julgados": {
-          "Total": "722",
-          "+60 dias": "75",
-          "+100 dias": "70"
+          "Total": "719",
+          "+60 dias": "76",
+          "+100 dias": "72"
         }
       },
       "EXECUÇÃO": {
         "Total": "660",
-        "+60 dias": "62",
-        "+100 dias": "57"
+        "+60 dias": "58",
+        "+100 dias": "61"
       },
       "EXECUÇÃO FISCAL": {
         "Total": "14",
@@ -115,39 +169,66 @@
       },
       "EXECUÇÃO CRIMINAL": {
         "Total": "116",
-        "+60 dias": "30",
-        "+100 dias": "51"
+        "+60 dias": "24",
+        "+100 dias": "58"
       },
       "TOTAL": {
-        "Total": "1.823",
-        "+60 dias": "176",
-        "+100 dias": "208"
+        "Total": "1.824",
+        "+60 dias": "168",
+        "+100 dias": "221"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "6",
+        "+60 dias": "0",
+        "+100 dias": "1"
+      },
+      "Inquérito Policial": {
+        "Total": "35",
+        "+60 dias": "6",
+        "+100 dias": "3"
+      },
+      "Cartas": {
+        "Total": "17",
+        "+60 dias": "5",
+        "+100 dias": "7"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "29",
+        "+60 dias": "1",
+        "+100 dias": "16"
+      },
+      "TOTAL": {
+        "Total": "87",
+        "+60 dias": "12",
+        "+100 dias": "27"
       }
     }
   },
   {
     "id": 4,
     "unidade": "ANGICOS - VARA ÚNICA",
-    "acervo_total": "3.786",
+    "acervo_total": "3.788",
     "processos_em_tramitacao": {
       "CONHECIMENTO": {
-        "Total": "2.436",
-        "+60 dias": "439",
-        "+100 dias": "496",
+        "Total": "2.438",
+        "+60 dias": "451",
+        "+100 dias": "500",
         "Não julgados": {
-          "Total": "1.916",
-          "+60 dias": "392",
-          "+100 dias": "462"
+          "Total": "1.914",
+          "+60 dias": "399",
+          "+100 dias": "466"
         }
       },
       "EXECUÇÃO": {
         "Total": "784",
-        "+60 dias": "169",
-        "+100 dias": "142"
+        "+60 dias": "174",
+        "+100 dias": "144"
       },
       "EXECUÇÃO FISCAL": {
         "Total": "89",
-        "+60 dias": "16",
+        "+60 dias": "17",
         "+100 dias": "19",
         "Não julgados": {
           "Total": "73",
@@ -157,13 +238,40 @@
       },
       "EXECUÇÃO CRIMINAL": {
         "Total": "49",
-        "+60 dias": "2",
-        "+100 dias": "1"
+        "+60 dias": "1",
+        "+100 dias": "2"
       },
       "TOTAL": {
-        "Total": "3.358",
-        "+60 dias": "626",
-        "+100 dias": "658"
+        "Total": "3.360",
+        "+60 dias": "643",
+        "+100 dias": "665"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "26",
+        "+60 dias": "9",
+        "+100 dias": "0"
+      },
+      "Inquérito Policial": {
+        "Total": "56",
+        "+60 dias": "9",
+        "+100 dias": "2"
+      },
+      "Cartas": {
+        "Total": "22",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "80",
+        "+60 dias": "9",
+        "+100 dias": "7"
+      },
+      "TOTAL": {
+        "Total": "184",
+        "+60 dias": "27",
+        "+100 dias": "9"
       }
     }
   }

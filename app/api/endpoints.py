@@ -113,3 +113,27 @@ async def get_processos_unidade(
     except Exception as e:
         logger.error(f"Erro ao processar processos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar processos da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/procedimentos",
+    summary="Procedimentos e petições em tramitação de uma unidade específica",
+    description="Retorna apenas os dados de procedimentos e petições em tramitação"
+)
+async def get_procedimentos_unidade(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+
+        procedimentos = unit.get("procedimentos_e_peticoes_em_tramitacao", None)
+        if procedimentos is None:
+            raise HTTPException(404, f"Nenhum dado de procedimentos/petições encontrado para a unidade {unit_id}")
+
+        return JSONResponse(content=procedimentos)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar procedimentos da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar procedimentos da unidade {unit_id}")
