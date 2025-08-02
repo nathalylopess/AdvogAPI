@@ -50,6 +50,25 @@ def transform_unit_data(data: Dict) -> Dict:
         logger.error(f"Erro ao transformar dados da unidade: {str(e)}")
         raise HTTPException(500, f"Erro ao processar unidade ID {data.get('id')}")
 
+def transform_controle_de_prisoes(data) -> Dict:
+    def safe_str(value):
+        return str(value) if value is not None else ""
+
+    # Se já for string, retorna diretamente
+    if isinstance(data, str):
+        return {
+            "Total": data
+        }
+
+    # Se for dict, transforma normalmente
+    if isinstance(data, dict):
+        return {
+            "Total": safe_str(data.get("Total")),
+        }
+    
+    # Caso seja None ou outro tipo, retorna vazio
+    return {}
+
 def find_unit_by_id(data: List[Dict], unit_id: int) -> Dict:
     unit = next((u for u in data if u.get("id") == unit_id), None)
     if not unit:
@@ -161,3 +180,63 @@ async def get_suspensos_arquivo_provisorio_unidade(
     except Exception as e:
         logger.error(f"Erro ao processar dados de suspensos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar dados de suspensos da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/processos_conclusos_por_tipo",
+    summary="Processos conclusos por tipo de uma unidade específica",
+    description="Retorna os dados de processos conclusos por tipo para uma unidade judiciária específica"
+)
+async def get_processos_conclusos_por_tipo(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+        conclusos = unit.get("processos_conclusos_por_tipo", {})
+
+        if not conclusos:
+            raise HTTPException(404, f"Dados de 'processos_conclusos_por_tipo' não encontrados para unidade ID {unit_id}")
+
+        def safe_str(value):
+            return str(value) if value is not None else ""
+
+        result = {
+            tipo: {
+                "Total": safe_str(dados.get("Total")),
+                "+60 dias": safe_str(dados.get("+60 dias")),
+                "+100 dias": safe_str(dados.get("+100 dias")),
+            }
+            for tipo, dados in conclusos.items()
+        }
+
+        return JSONResponse(content=result)
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar processos conclusos da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar processos conclusos da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/controle_de_prisoes",
+    summary="Controle de prisões de uma unidade específica",
+    description="Retorna os dados da tabela de Controle de Prisões da unidade especificada"
+)
+
+async def get_controle_de_prisoes(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+        controle = unit.get("controle_de_prisoes")
+        if controle is None:
+            raise HTTPException(404, f"Controle de prisões da unidade {unit_id} não encontrado")
+
+        controle_transformado = transform_controle_de_prisoes(controle)
+        return JSONResponse(content=controle_transformado)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar controle de prisões da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar controle de prisões da unidade {unit_id}")

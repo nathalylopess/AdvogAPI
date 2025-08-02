@@ -98,6 +98,32 @@
         "+100 dias": "158",
         "+730 dias": "53"
       }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "68",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Despacho": {
+        "Total": "13",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Sentença": {
+        "Total": "21",
+        "+60 dias": "1",
+        "+100 dias": "0"
+      },
+      "Total de processos conclusos": {
+        "Total": "102",
+        "+60 dias": "1",
+        "+100 dias": "0"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "6",
+      "Total": "6"
     }
   },
   {
@@ -199,6 +225,32 @@
         "+100 dias": "271",
         "+730 dias": "5"
       }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "24",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Despacho": {
+        "Total": "13",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Sentença": {
+        "Total": "13",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Total de processos conclusos": {
+        "Total": "50",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "5",
+      "Total": "5"
     }
   },
   {
@@ -300,6 +352,32 @@
         "+100 dias": "199",
         "+730 dias": "17"
       }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "181",
+        "+60 dias": "17",
+        "+100 dias": "7"
+      },
+      "Despacho": {
+        "Total": "395",
+        "+60 dias": "51",
+        "+100 dias": "17"
+      },
+      "Sentença": {
+        "Total": "151",
+        "+60 dias": "37",
+        "+100 dias": "19"
+      },
+      "Total de processos conclusos": {
+        "Total": "727",
+        "+60 dias": "105",
+        "+100 dias": "43"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "1",
+      "Total": "1"
     }
   },
   {
@@ -401,6 +479,32 @@
         "+100 dias": "145",
         "+730 dias": "35"
       }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "572",
+        "+60 dias": "204",
+        "+100 dias": "287"
+      },
+      "Despacho": {
+        "Total": "276",
+        "+60 dias": "84",
+        "+100 dias": "140"
+      },
+      "Sentença": {
+        "Total": "296",
+        "+60 dias": "73",
+        "+100 dias": "199"
+      },
+      "Total de processos conclusos": {
+        "Total": "1.144",
+        "+60 dias": "361",
+        "+100 dias": "626"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "6",
+      "Total": "6"
     }
   }
 ]

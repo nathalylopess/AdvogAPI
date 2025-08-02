@@ -53,6 +53,12 @@ def process_unit(scraper, index: int) -> Dict:
         console.print("[green]✔ Chamando get_suspensos_arquivo_provisorio()[/]")
         suspensos_arquivo_provisorio = get_suspensos_arquivo_provisorio(scraper)
 
+        console.print("[green]✔ Chamando get_processos_conclusos_por_tipo()[/]")
+        conclusos = get_processos_conclusos_por_tipo(scraper)
+
+        console.print("[green]✔ Chamando get_controle_de_prisoes()[/]")
+        controle_prisoes = get_controle_de_prisoes(scraper)
+
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
 
         return {
@@ -61,7 +67,9 @@ def process_unit(scraper, index: int) -> Dict:
             "acervo_total": acervo,
             "processos_em_tramitacao": processos,
             "procedimentos_e_peticoes_em_tramitacao": procedimentos,
-            "suspensos_arquivo_provisorio": suspensos_arquivo_provisorio
+            "suspensos_arquivo_provisorio": suspensos_arquivo_provisorio,
+            "processos_conclusos_por_tipo": conclusos,
+            "controle_de_prisoes": controle_prisoes
         }
 
     except StaleElementReferenceException:
@@ -228,6 +236,76 @@ def get_suspensos_arquivo_provisorio(scraper) -> Dict:
         console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Suspensos / Arquivo provisório'. Erro: {str(e)}")
 
     return dados
+
+def get_processos_conclusos_por_tipo(scraper) -> Dict[str, Dict[str, str]]:
+    """
+    Coleta os dados da tabela 'Processos Conclusos por Tipo'.
+
+    Retorna um dicionário com os tipos (Decisão, Despacho, Sentença, Total de processos conclusos)
+    e os respectivos totais por prazo.
+    """
+    conclusos = {}
+
+    try:
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[contains(@class,'table-data')]/div[contains(text(),'Processos Conclusos por Tipo')]/following-sibling::table"
+            )),
+            timeout=10,
+            error_msg="Tabela de 'Processos Conclusos por Tipo' não encontrada"
+        )
+
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        for row in rows:
+            cells = row.find_elements(By.TAG_NAME, "td")
+            if len(cells) == 4:
+                tipo = cells[0].text.strip()
+                conclusos[tipo] = {
+                    "Total": cells[1].text.strip(),
+                    "+60 dias": cells[2].text.strip(),
+                    "+100 dias": cells[3].text.strip()
+                }
+
+    except Exception as e:
+        console.print(f"[bold yellow]⚠ Aviso:[/] Erro ao coletar dados de 'Processos Conclusos por Tipo': {str(e)}")
+
+    return conclusos
+
+def get_controle_de_prisoes(scraper) -> Dict[str, str]:
+    """
+    Coleta os dados da tabela 'Controle de Prisões'.
+
+    Retorna um dicionário com o tipo de prisão como chave e o total como valor.
+    """
+    prisoes = {}
+
+    try:
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[contains(@class,'table-data')]/div[contains(text(),'Controle de Prisões')]/following-sibling::table"
+            )),
+            timeout=10,
+            error_msg="Tabela de 'Controle de Prisões' não encontrada"
+        )
+
+        rows = table.find_elements(By.TAG_NAME, "tr")
+
+        for row in rows:
+            cells = row.find_elements(By.TAG_NAME, "td")
+            if len(cells) == 2:
+                tipo = cells[0].text.strip()
+                total = cells[1].text.strip()
+                prisoes[tipo] = total
+
+    except Exception as e:
+        console.print(f"[bold yellow]⚠ Aviso:[/] Erro ao coletar dados de 'Controle de Prisões': {str(e)}")
+
+    return prisoes
 
 def parse_processos_data(cells) -> Dict:
     return {

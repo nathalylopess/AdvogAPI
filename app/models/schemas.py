@@ -47,6 +47,20 @@ class SuspensosArquivoProvisorioItem(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+class ProcessoConclusoPorTipo(BaseModel):
+    total: str = Field(..., alias="Total", example="68")
+    mais_60_dias: str = Field(..., alias="+60 dias", example="0")
+    mais_100_dias: str = Field(..., alias="+100 dias", example="0")
+
+    class Config:
+        allow_population_by_field_name = True
+
+class ControleDePrisoes(BaseModel):
+    total: str = Field(..., alias="Total", example="6")
+
+    class Config:
+        allow_population_by_field_name = True
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -86,6 +100,49 @@ class UnidadeData(BaseModel):
                 "+60 dias": "16",
                 "+100 dias": "115",
                 "+730 dias": "38"
+            }
+        }
+    )
+
+    processos_conclusos_por_tipo: Optional[Dict[str, ProcessoConclusoPorTipo]] = Field(
+        None,
+        description="Dados da tabela de Processos Conclusos por Tipo",
+        example={
+            "Decisão": {
+                "Total": "68",
+                "+60 dias": "0",
+                "+100 dias": "0"
+            },
+            "Despacho": {
+                "Total": "13",
+                "+60 dias": "0",
+                "+100 dias": "0"
+            },
+            "Sentença": {
+                "Total": "21",
+                "+60 dias": "1",
+                "+100 dias": "0"
+            },
+            "Total de processos conclusos": {
+                "Total": "102",
+                "+60 dias": "1",
+                "+100 dias": "0"
+            }
+        }
+    )
+
+    controle_de_prisoes: Optional[Dict[str, ControleDePrisoes]] = Field(
+        None,
+        description="Dados da tabela de Controle de Prisões",
+        example={
+            "Não identificada": {
+                "Total": "6"
+            },
+            "Preventiva": {
+                "Total": "12"
+            },
+            "Temporária": {
+                "Total": "3"
             }
         }
     )
