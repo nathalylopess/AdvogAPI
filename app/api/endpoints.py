@@ -264,3 +264,26 @@ async def get_controle_de_diligencias_unidade(
     except Exception as e:
         logger.error(f"Erro ao processar controle de diligências da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar controle de diligências da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/distribuicoes",
+    summary="Demonstrativo de distribuições da unidade",
+    description="Retorna apenas os dados do Demonstrativo de Distribuições (últimos 12 meses)"
+)
+async def get_distribuicoes_unidade(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+        distrib = unit.get("demonstrativo_de_distribuicoes")
+
+        if distrib is None:
+            raise HTTPException(404, f"Dados de demonstrativo de distribuições não encontrados para a unidade {unit_id}")
+
+        return JSONResponse(content=distrib)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar distribuições da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar distribuições da unidade {unit_id}")

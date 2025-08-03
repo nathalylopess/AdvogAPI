@@ -62,6 +62,9 @@ def process_unit(scraper, index: int) -> Dict:
         console.print("[green]✔ Chamando get_controle_de_diligencias()[/]")
         diligencias = get_controle_de_diligencias(scraper)
 
+        console.print("[green]✔ Chamando get_demonstrativo_de_distribuicoes()[/]")
+        demonstrativo_de_distribuicoes = get_demonstrativo_de_distribuicoes(scraper)
+
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
 
         return {
@@ -73,7 +76,8 @@ def process_unit(scraper, index: int) -> Dict:
             "suspensos_arquivo_provisorio": suspensos_arquivo_provisorio,
             "processos_conclusos_por_tipo": conclusos,
             "controle_de_prisoes": controle_prisoes,
-            "controle_de_diligencias": diligencias
+            "controle_de_diligencias": diligencias,
+            "demonstrativo_de_distribuicoes": demonstrativo_de_distribuicoes
         }
 
     except StaleElementReferenceException:
@@ -343,6 +347,50 @@ def get_controle_de_diligencias(scraper) -> Dict[str, str]:
         console.print(f"[bold yellow]⚠ Aviso:[/] Erro ao coletar dados de 'Controle de Diligências (PJe)': {str(e)}")
 
     return diligencias
+
+def get_demonstrativo_de_distribuicoes(scraper) -> Dict:
+    try:
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[@class='title' and contains(text(), 'Demonstrativo de Distribuições')]/following-sibling::table[1]"
+            )),
+            timeout=10,
+            error_msg="Tabela de Demonstrativo de Distribuições não encontrada"
+        )
+
+        rows = table.find_elements(By.TAG_NAME, "tr")
+        header_cells = rows[0].find_elements(By.TAG_NAME, "th")
+        meses = [cell.text.strip() for cell in header_cells[1:-1]]  # Ignora a primeira (label) e última (total)
+
+        dados = {}
+        for row in rows[1:-1]:  # Ignora o cabeçalho e o saldo (tfoot)
+            cells = row.find_elements(By.TAG_NAME, "td")
+            categoria = cells[0].text.strip()
+            valores = [cell.text.strip() for cell in cells[1:-1]]  # Ignora Total final
+            total = cells[-1].text.strip()
+
+            dados[categoria] = {
+                "mensal": dict(zip(meses, valores)),
+                "total": total
+            }
+
+        # Pega o saldo da última linha (tfoot)
+        saldo_row = rows[-1].find_elements(By.TAG_NAME, "td")
+        saldo_mensal = [cell.text.strip() for cell in saldo_row[1:-1]]
+        saldo_total = saldo_row[-1].text.strip()
+
+        dados["Saldo (entradas - saídas)"] = {
+            "mensal": dict(zip(meses, saldo_mensal)),
+            "total": saldo_total
+        }
+
+        return dados
+
+    except Exception as e:
+        console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Demonstrativo de Distribuições'. Erro: {str(e)}")
+        return {}
 
 def parse_processos_data(cells) -> Dict:
     return {

@@ -67,6 +67,17 @@ class ControleDeDiligenciasItem(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+class DistribuicaoMensal(BaseModel):
+    mensal: Dict[str, str] = Field(
+        ...,
+        example={
+            "Set / 2024": "70",
+            "Out / 2024": "101",
+            "Nov / 2024": "87"
+        }
+    )
+    total: str = Field(..., example="1107")
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -169,5 +180,44 @@ class UnidadeData(BaseModel):
         }
     )
 
+    demonstrativo_de_distribuicoes: Optional[Dict[str, DistribuicaoMensal]] = Field(
+        None,
+        description="Dados do Demonstrativo de Distribuições (últimos 12 meses)",
+        example={
+            "Entradas por Distribuição": {
+                "mensal": {
+                    "Set / 2024": "70",
+                    "Out / 2024": "101",
+                    "Nov / 2024": "87"
+                },
+                "total": "1107"
+            },
+            "Entradas por Redistribuição": {
+                "mensal": {
+                    "Set / 2024": "7",
+                    "Out / 2024": "12",
+                    "Nov / 2024": "11"
+                },
+                "total": "146"
+            },
+            "Saídas por Redistribuição": {
+                "mensal": {
+                    "Set / 2024": "2",
+                    "Out / 2024": "5",
+                    "Nov / 2024": "8"
+                },
+                "total": "71"
+            },
+            "Saldo (entradas - saídas)": {
+                "mensal": {
+                    "Set / 2024": "75",
+                    "Out / 2024": "108",
+                    "Nov / 2024": "90"
+                },
+                "total": "1182"
+            }
+        }
+    )
+    
     class Config:
         allow_population_by_field_name = True
