@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from app.services.data_service import DataService
 from app.models.schemas import UnidadeData
-from typing import List, Dict
+from typing import List, Dict, Optional
 import logging
 
 # Router principal - Rotas gerais
@@ -43,6 +43,14 @@ def transform_process_data(data: Dict) -> Dict:
 
     return result
 
+def transform_dict_with_total(data: Optional[Dict]) -> Optional[Dict[str, Dict[str, str]]]:
+    if not isinstance(data, dict):
+        return None
+    return {
+        k: {"Total": str(v)} if not isinstance(v, dict) else v
+        for k, v in data.items()
+    }
+
 def transform_unit_data(data: Dict) -> Dict:
     try:
         return {
@@ -52,11 +60,20 @@ def transform_unit_data(data: Dict) -> Dict:
             "processos_em_tramitacao": {
                 k: transform_process_data(v)
                 for k, v in data.get("processos_em_tramitacao", {}).items()
-            }
+            },
+            "procedimentos_e_peticoes_em_tramitacao": data.get("procedimentos_e_peticoes_em_tramitacao"),
+            "suspensos_arquivo_provisorio": data.get("suspensos_arquivo_provisorio"),
+            "processos_conclusos_por_tipo": transform_dict_with_total(data.get("processos_conclusos_por_tipo")),
+            "controle_de_prisoes": transform_dict_with_total(data.get("controle_de_prisoes")),
+            "controle_de_diligencias": transform_dict_with_total(data.get("controle_de_diligencias")),
+            "demonstrativo_de_distribuicoes": transform_dict_with_total(data.get("demonstrativo_de_distribuicoes")),
+            "processos_baixados": transform_dict_with_total(data.get("processos_baixados")),
+            "atos_judiciais_proferidos": transform_dict_with_total(data.get("atos_judiciais_proferidos")),
         }
     except Exception as e:
         logger.error(f"Erro ao transformar dados da unidade: {str(e)}")
         raise HTTPException(500, f"Erro ao processar unidade ID {data.get('id')}")
+
 
 def transform_controle_de_prisoes(data) -> Dict:
     def safe_str(value):
