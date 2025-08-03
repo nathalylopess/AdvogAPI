@@ -74,7 +74,6 @@ def transform_unit_data(data: Dict) -> Dict:
         logger.error(f"Erro ao transformar dados da unidade: {str(e)}")
         raise HTTPException(500, f"Erro ao processar unidade ID {data.get('id')}")
 
-
 def transform_controle_de_prisoes(data) -> Dict:
     def safe_str(value):
         return str(value) if value is not None else ""
@@ -117,6 +116,279 @@ async def list_unidades(service: DataService = Depends(get_data_service)):
     except Exception as e:
         logger.error(f"Erro ao processar lista de unidades: {str(e)}")
         raise HTTPException(500, "Erro ao processar os dados das unidades")
+
+@router.get(
+    "/unidades/processos",
+    summary="Processos em tramitação de todas as unidades",
+    description="Retorna os dados de processos em tramitação para todas as unidades"
+)
+async def get_processos(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            processos = {
+                k: transform_process_data(v)
+                for k, v in unit.get("processos_em_tramitacao", {}).items()
+            }
+            resultados.append({
+                "id": unit.get("id"),
+                "unidade": unit.get("unidade"),
+                "processos_em_tramitacao": processos
+            })
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar processos gerais: {str(e)}")
+        raise HTTPException(500, "Erro ao processar dados de processos")
+
+@router.get(
+    "/unidades/procedimentos",
+    summary="Procedimentos e petições em tramitação de todas as unidades",
+    description="Retorna os dados de procedimentos e petições em tramitação para todas as unidades"
+)
+async def get_procedimentos(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            procedimentos = unit.get("procedimentos_e_peticoes_em_tramitacao")
+            if procedimentos:  # filtra apenas os que têm dado
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "procedimentos_e_peticoes_em_tramitacao": procedimentos
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de procedimentos/petições encontrado em nenhuma unidade")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar procedimentos gerais: {str(e)}")
+        raise HTTPException(500, "Erro ao processar dados de procedimentos/petições")
+
+@router.get(
+    "/unidades/suspensos",
+    summary="Suspensos / Arquivo provisório de todas as unidades",
+    description="Retorna os dados de processos suspensos ou em arquivo provisório para todas as unidades"
+)
+async def get_suspensos_arquivo_provisorio(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            suspensos = unit.get("suspensos_arquivo_provisorio")
+            if suspensos:
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "suspensos_arquivo_provisorio": suspensos
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de suspensos/arquivo provisório encontrado em nenhuma unidade")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar dados de suspensos gerais: {str(e)}")
+        raise HTTPException(500, "Erro ao processar dados de suspensos/arquivo provisório")
+
+@router.get(
+    "/unidades/processos_conclusos_por_tipo",
+    summary="Processos conclusos por tipo de todas as unidades",
+    description="Retorna os dados de processos conclusos por tipo para todas as unidades judiciárias"
+)
+async def get_processos_conclusos_por_tipo(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        def safe_str(value):
+            return str(value) if value is not None else ""
+
+        resultados = []
+
+        for unit in service.data:
+            conclusos = unit.get("processos_conclusos_por_tipo", {})
+            if conclusos:
+                dados_formatados = {
+                    tipo: {
+                        "Total": safe_str(d.get("Total")),
+                        "+60 dias": safe_str(d.get("+60 dias")),
+                        "+100 dias": safe_str(d.get("+100 dias")),
+                    }
+                    for tipo, d in conclusos.items()
+                }
+
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "processos_conclusos_por_tipo": dados_formatados
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de processos conclusos por tipo encontrado")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar processos conclusos gerais: {str(e)}")
+        raise HTTPException(500, "Erro ao processar processos conclusos por tipo")
+
+@router.get(
+    "/unidades/controle_de_prisoes",
+    summary="Controle de prisões de todas as unidades",
+    description="Retorna os dados da tabela de Controle de Prisões de todas as unidades judiciárias"
+)
+async def get_controle_de_prisoes(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            controle = unit.get("controle_de_prisoes")
+            if controle:
+                controle_transformado = transform_controle_de_prisoes(controle)
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "controle_de_prisoes": controle_transformado
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de controle de prisões encontrado")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar controle de prisões geral: {str(e)}")
+        raise HTTPException(500, "Erro ao processar controle de prisões")
+
+@router.get(
+    "/unidades/controle_de_diligencias",
+    summary="Controle de diligências de todas as unidades",
+    description="Retorna os dados da tabela de Controle de Diligências (PJe) de todas as unidades"
+)
+async def get_controle_de_diligencias(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            controle = unit.get("controle_de_diligencias")
+            if controle:
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "controle_de_diligencias": controle
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de controle de diligências encontrado")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar controle de diligências geral: {str(e)}")
+        raise HTTPException(500, "Erro ao processar controle de diligências")
+
+@router.get(
+    "/unidades/distribuicoes",
+    summary="Demonstrativo de distribuições de todas as unidades",
+    description="Retorna os dados do Demonstrativo de Distribuições (últimos 12 meses) de todas as unidades"
+)
+async def get_distribuicoes(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            distrib = unit.get("demonstrativo_de_distribuicoes")
+            if distrib:
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "demonstrativo_de_distribuicoes": distrib
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de distribuições encontrado")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar demonstrativo de distribuições geral: {str(e)}")
+        raise HTTPException(500, "Erro ao processar distribuições")
+
+@router.get(
+    "/unidades/processos_baixados",
+    summary="Processos baixados de todas as unidades",
+    description="Retorna os dados da tabela de processos baixados (últimos 12 meses) de todas as unidades"
+)
+async def get_processos_baixados(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            processos_baixados = unit.get("processos_baixados")
+            if processos_baixados:
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "processos_baixados": processos_baixados
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de processos baixados encontrado")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar processos baixados geral: {str(e)}")
+        raise HTTPException(500, "Erro ao processar processos baixados")
+
+@router.get(
+    "/unidades/atos_judiciais",
+    summary="Atos judiciais proferidos de todas as unidades",
+    description="Retorna os dados da tabela de atos judiciais proferidos (últimos 12 meses) de todas as unidades"
+)
+async def get_atos_judiciais_proferidos(
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        resultados = []
+
+        for unit in service.data:
+            atos = unit.get("atos_judiciais_proferidos")
+            if atos:
+                resultados.append({
+                    "id": unit.get("id"),
+                    "unidade": unit.get("unidade"),
+                    "atos_judiciais_proferidos": atos
+                })
+
+        if not resultados:
+            raise HTTPException(404, "Nenhum dado de atos judiciais proferidos encontrado")
+
+        return JSONResponse(content=resultados)
+
+    except Exception as e:
+        logger.error(f"Erro ao processar atos judiciais geral: {str(e)}")
+        raise HTTPException(500, "Erro ao processar atos judiciais")
 
 @router_unidade.get(
     "/unidades/{unit_id}",
@@ -337,7 +609,7 @@ async def get_processos_baixados_unidade(
         raise HTTPException(500, f"Erro ao processar processos baixados da unidade {unit_id}")
 
 @router_unidade.get(
-    "/unidades/{unit_id}/atos-judiciais",
+    "/unidades/{unit_id}/atos_judiciais",
     summary="Atos judiciais proferidos de uma unidade específica",
     description="Retorna apenas os dados da tabela de atos judiciais proferidos nos últimos 12 meses"
 )
