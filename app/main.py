@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.endpoints import router, router_unidade
+from app.api.endpoints import router, router_auth, router_unidade
 from app.services.data_service import DataService
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -19,6 +19,7 @@ app.add_middleware(
 )
 
 # Inclui as rotas da API
+app.include_router(router_auth)
 app.include_router(router)
 app.include_router(router_unidade)
 
