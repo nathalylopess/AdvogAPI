@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.endpoints import router as api_router
+from app.api.endpoints import router, router_unidade
 from app.services.data_service import DataService
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -19,7 +19,8 @@ app.add_middleware(
 )
 
 # Inclui as rotas da API
-app.include_router(api_router)
+app.include_router(router)
+app.include_router(router_unidade)
 
 @app.on_event("startup")
 async def startup_event():

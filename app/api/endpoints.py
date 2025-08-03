@@ -5,10 +5,18 @@ from app.models.schemas import UnidadeData
 from typing import List, Dict
 import logging
 
+# Router principal - Rotas gerais
 router = APIRouter(
     prefix="/api/v1",
     tags=["unidades"],
     responses={404: {"description": "Não encontrado"}}
+)
+
+# Router específico - Rotas por unidade específica
+router_unidade = APIRouter(
+    prefix="/api/v1/unidades",
+    tags=["unidade específica"],
+    responses={404: {"description": "Unidade não encontrada"}}
 )
 
 logger = logging.getLogger(__name__)
@@ -93,7 +101,7 @@ async def list_unidades(service: DataService = Depends(get_data_service)):
         logger.error(f"Erro ao processar lista de unidades: {str(e)}")
         raise HTTPException(500, "Erro ao processar os dados das unidades")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}",
     response_model=UnidadeData,
     summary="Obtém uma unidade específica"
@@ -111,7 +119,7 @@ async def get_unidade(
         logger.error(f"Erro ao processar unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar unidade ID {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/processos",
     summary="Processos em tramitação de uma unidade específica",
     description="Retorna apenas os dados de processos em tramitação"
@@ -133,7 +141,7 @@ async def get_processos_unidade(
         logger.error(f"Erro ao processar processos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar processos da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/procedimentos",
     summary="Procedimentos e petições em tramitação de uma unidade específica",
     description="Retorna apenas os dados de procedimentos e petições em tramitação"
@@ -157,7 +165,7 @@ async def get_procedimentos_unidade(
         logger.error(f"Erro ao processar procedimentos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar procedimentos da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/suspensos",
     summary="Suspensos / Arquivo provisório de uma unidade específica",
     description="Retorna os dados de processos suspensos ou em arquivo provisório de uma unidade judiciária"
@@ -181,7 +189,7 @@ async def get_suspensos_arquivo_provisorio_unidade(
         logger.error(f"Erro ao processar dados de suspensos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar dados de suspensos da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/processos_conclusos_por_tipo",
     summary="Processos conclusos por tipo de uma unidade específica",
     description="Retorna os dados de processos conclusos por tipo para uma unidade judiciária específica"
@@ -217,7 +225,7 @@ async def get_processos_conclusos_por_tipo(
         logger.error(f"Erro ao processar processos conclusos da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar processos conclusos da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/controle_de_prisoes",
     summary="Controle de prisões de uma unidade específica",
     description="Retorna os dados da tabela de Controle de Prisões da unidade especificada"
@@ -241,7 +249,7 @@ async def get_controle_de_prisoes(
         logger.error(f"Erro ao processar controle de prisões da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar controle de prisões da unidade {unit_id}")
     
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/controle_de_diligencias",
     summary="Controle de diligências de uma unidade específica",
     description="Retorna os dados da tabela de Controle de Diligências (PJe) da unidade especificada"
@@ -265,7 +273,7 @@ async def get_controle_de_diligencias_unidade(
         logger.error(f"Erro ao processar controle de diligências da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar controle de diligências da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/distribuicoes",
     summary="Demonstrativo de distribuições da unidade",
     description="Retorna apenas os dados do Demonstrativo de Distribuições (últimos 12 meses)"
@@ -288,7 +296,7 @@ async def get_distribuicoes_unidade(
         logger.error(f"Erro ao processar distribuições da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar distribuições da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/processos_baixados",
     summary="Processos baixados de uma unidade específica",
     description="Retorna apenas os dados da tabela de processos baixados nos últimos 12 meses"
@@ -311,7 +319,7 @@ async def get_processos_baixados_unidade(
         logger.error(f"Erro ao processar processos baixados da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar processos baixados da unidade {unit_id}")
 
-@router.get(
+@router_unidade.get(
     "/unidades/{unit_id}/atos-judiciais",
     summary="Atos judiciais proferidos de uma unidade específica",
     description="Retorna apenas os dados da tabela de atos judiciais proferidos nos últimos 12 meses"
