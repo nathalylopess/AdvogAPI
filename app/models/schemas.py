@@ -1,26 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Dict, Optional
 
-class UserBase(BaseModel):
-    username: str
-    disabled: Optional[bool] = False
-
-class UserCreate(UserBase):
-    password: str
-
-class UserInDB(UserBase):
-    hashed_password: str
-
-class Cliente(UserInDB):
-    id: int
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-class TokenData(BaseModel):
-    username: Optional[str] = None
-
 class ProcessosNaoJulgados(BaseModel):
     total: Optional[str] = Field(..., example="100", alias="Total")
     mais_60_dias: Optional[str] = Field(..., example="10", alias="+60 dias")

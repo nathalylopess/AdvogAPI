@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.endpoints import router, router_auth, router_unidade
 from app.services.data_service import DataService
+from app.core.database import create_db_and_tables
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
@@ -29,6 +30,7 @@ async def startup_event():
     service = DataService(auto_load=True)
     if not service.data:
         print("⚠ Nenhum dado encontrado. Execute o scraper primeiro.")
+    create_db_and_tables()
 
 @app.get("/", include_in_schema=False)
 async def root():

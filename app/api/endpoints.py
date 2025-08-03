@@ -2,7 +2,9 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from app.services.data_service import DataService
-from app.models.schemas import UnidadeData, Cliente, UserCreate, Token
+from app.models.user import Cliente, UserCreate, Token
+from app.models.schemas import UnidadeData
+from sqlmodel import Session, select
 from typing import List, Dict, Optional
 import logging
 
@@ -13,9 +15,9 @@ from app.api.authentication import (
     create_access_token,
     get_current_active_user,
     hash_password,
-    clientes_db,
-    ACCESS_TOKEN_EXPIRE_MINUTES
+    ACCESS_TOKEN_EXPIRE_MINUTES,
 )
+from app.core.database import get_session
 
 # Router principal - Rotas gerais
 router = APIRouter(
@@ -47,8 +49,11 @@ logger = logging.getLogger(__name__)
     summary="Obter token de acesso",
     description="Autentica o usuário e retorna um token JWT para uso nas rotas protegidas"
 )
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(form_data.username, form_data.password)
+async def login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    session: Session = Depends(get_session),
+):
+    user = authenticate_user(form_data.username, form_data.password, session)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -57,31 +62,40 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
         )
     access_token = create_access_token(
         data={"sub": user.username},
-        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+# Endpoint para criar um novo usuário
 @router_auth.post(
     "/usuarios",
     response_model=Cliente,
     summary="Criar novo usuário",
     description="Registra um novo usuário no sistema",
-    status_code=status.HTTP_201_CREATED
+    status_code=status.HTTP_201_CREATED,
 )
-async def criar_usuario(usuario: UserCreate):
-    if usuario.username in clientes_db:
+async def criar_usuario(
+    usuario: UserCreate,
+    session: Session = Depends(get_session),
+):
+    # Verifica se usuário já existe no banco
+    statement = select(Cliente).where(Cliente.username == usuario.username)
+    existing_user = session.exec(statement).first()
+    if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Usuário já existe"
+            detail="Usuário já existe",
         )
 
     db_usuario = Cliente(
         **usuario.dict(exclude={"password"}),
         hashed_password=hash_password(usuario.password),
-        id=len(clientes_db) + 1
     )
 
-    clientes_db[usuario.username] = db_usuario
+    session.add(db_usuario)
+    session.commit()
+    session.refresh(db_usuario)  # Para atualizar o objeto com o ID gerado pelo banco
+
     return db_usuario
 
 @router_auth.get(
