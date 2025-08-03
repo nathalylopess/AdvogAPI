@@ -7,16 +7,16 @@
       "CONHECIMENTO": {
         "Total": "859",
         "+60 dias": "49",
-        "+100 dias": "0",
+        "+100 dias": "1",
         "Não julgados": {
           "Total": "615",
           "+60 dias": "42",
-          "+100 dias": "0"
+          "+100 dias": "1"
         }
       },
       "EXECUÇÃO": {
         "Total": "556",
-        "+60 dias": "46",
+        "+60 dias": "47",
         "+100 dias": "4"
       },
       "EXECUÇÃO FISCAL": {
@@ -36,23 +36,290 @@
       },
       "TOTAL": {
         "Total": "1.491",
-        "+60 dias": "96",
-        "+100 dias": "4"
+        "+60 dias": "97",
+        "+100 dias": "5"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "2",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Inquérito Policial": {
+        "Total": "30",
+        "+60 dias": "1",
+        "+100 dias": "0"
+      },
+      "Cartas": {
+        "Total": "12",
+        "+60 dias": "2",
+        "+100 dias": "0"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "33",
+        "+60 dias": "4",
+        "+100 dias": "0"
+      },
+      "TOTAL": {
+        "Total": "77",
+        "+60 dias": "7",
+        "+100 dias": "0"
+      }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "18",
+        "+60 dias": "0",
+        "+100 dias": "14",
+        "+730 dias": "4"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "0",
+        "+60 dias": "0",
+        "+100 dias": "0",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "42",
+        "+60 dias": "0",
+        "+100 dias": "29",
+        "+730 dias": "11"
+      },
+      "Outros Motivos": {
+        "Total": "197",
+        "+60 dias": "16",
+        "+100 dias": "115",
+        "+730 dias": "38"
+      },
+      "TOTAL": {
+        "Total": "257",
+        "+60 dias": "16",
+        "+100 dias": "158",
+        "+730 dias": "53"
+      }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "68",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Despacho": {
+        "Total": "13",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Sentença": {
+        "Total": "21",
+        "+60 dias": "1",
+        "+100 dias": "0"
+      },
+      "Total de processos conclusos": {
+        "Total": "102",
+        "+60 dias": "1",
+        "+100 dias": "0"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "6",
+      "Total": "6"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "62",
+      "COJUD": "39",
+      "INQUÉRITO REMETIDO AO MP": "7",
+      "Total": "108"
+    },
+    "demonstrativo_de_distribuicoes": {
+      "Entradas por Distribuição": {
+        "mensal": {
+          "Set / 2024": "70",
+          "Out / 2024": "101",
+          "Nov / 2024": "87",
+          "Dez / 2024": "70",
+          "Jan / 2025": "134",
+          "Fev / 2025": "100",
+          "Mar / 2025": "80",
+          "Abr / 2025": "96",
+          "Mai / 2025": "146",
+          "Jun / 2025": "106",
+          "Jul / 2025": "114",
+          "Ago / 2025": "3"
+        },
+        "total": "1.107"
+      },
+      "Entradas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "7",
+          "Out / 2024": "12",
+          "Nov / 2024": "11",
+          "Dez / 2024": "20",
+          "Jan / 2025": "13",
+          "Fev / 2025": "15",
+          "Mar / 2025": "9",
+          "Abr / 2025": "18",
+          "Mai / 2025": "21",
+          "Jun / 2025": "13",
+          "Jul / 2025": "7",
+          "Ago / 2025": "0"
+        },
+        "total": "146"
+      },
+      "Saídas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "2",
+          "Out / 2024": "5",
+          "Nov / 2024": "8",
+          "Dez / 2024": "6",
+          "Jan / 2025": "4",
+          "Fev / 2025": "15",
+          "Mar / 2025": "8",
+          "Abr / 2025": "3",
+          "Mai / 2025": "12",
+          "Jun / 2025": "3",
+          "Jul / 2025": "5",
+          "Ago / 2025": "0"
+        },
+        "total": "71"
+      },
+      "Saldo (entradas - saídas)": {
+        "mensal": {
+          "Set / 2024": "75",
+          "Out / 2024": "108",
+          "Nov / 2024": "90",
+          "Dez / 2024": "84",
+          "Jan / 2025": "143",
+          "Fev / 2025": "100",
+          "Mar / 2025": "81",
+          "Abr / 2025": "111",
+          "Mai / 2025": "155",
+          "Jun / 2025": "116",
+          "Jul / 2025": "116",
+          "Ago / 2025": "3"
+        },
+        "total": "1.182"
+      }
+    },
+    "processos_baixados": {
+      "Baixados": {
+        "mensal": {
+          "Set / 2024": "80",
+          "Out / 2024": "174",
+          "Nov / 2024": "159",
+          "Dez / 2024": "103",
+          "Jan / 2025": "105",
+          "Fev / 2025": "139",
+          "Mar / 2025": "160",
+          "Abr / 2025": "104",
+          "Mai / 2025": "163",
+          "Jun / 2025": "145",
+          "Jul / 2025": "186",
+          "Ago / 2025": "8"
+        },
+        "total": "1.526"
+      }
+    },
+    "atos_judiciais_proferidos": {
+      "Decisões": {
+        "mensal": {
+          "Set / 2024": "145",
+          "Out / 2024": "430",
+          "Nov / 2024": "172",
+          "Dez / 2024": "223",
+          "Jan / 2025": "351",
+          "Fev / 2025": "310",
+          "Mar / 2025": "225",
+          "Abr / 2025": "200",
+          "Mai / 2025": "305",
+          "Jun / 2025": "315",
+          "Jul / 2025": "384",
+          "Ago / 2025": "15"
+        },
+        "total": "3.075"
+      },
+      "Despachos": {
+        "mensal": {
+          "Set / 2024": "182",
+          "Out / 2024": "224",
+          "Nov / 2024": "193",
+          "Dez / 2024": "181",
+          "Jan / 2025": "375",
+          "Fev / 2025": "367",
+          "Mar / 2025": "287",
+          "Abr / 2025": "277",
+          "Mai / 2025": "413",
+          "Jun / 2025": "245",
+          "Jul / 2025": "268",
+          "Ago / 2025": "5"
+        },
+        "total": "3.017"
+      },
+      "Julgamentos": {
+        "mensal": {
+          "Set / 2024": "37",
+          "Out / 2024": "259",
+          "Nov / 2024": "121",
+          "Dez / 2024": "104",
+          "Jan / 2025": "112",
+          "Fev / 2025": "163",
+          "Mar / 2025": "120",
+          "Abr / 2025": "113",
+          "Mai / 2025": "116",
+          "Jun / 2025": "110",
+          "Jul / 2025": "179",
+          "Ago / 2025": "16"
+        },
+        "total": "1.450"
+      },
+      "Julgamentos COM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "36",
+          "Out / 2024": "223",
+          "Nov / 2024": "105",
+          "Dez / 2024": "94",
+          "Jan / 2025": "93",
+          "Fev / 2025": "142",
+          "Mar / 2025": "102",
+          "Abr / 2025": "100",
+          "Mai / 2025": "97",
+          "Jun / 2025": "97",
+          "Jul / 2025": "159",
+          "Ago / 2025": "15"
+        },
+        "total": "1.263"
+      },
+      "Julgamentos SEM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "1",
+          "Out / 2024": "36",
+          "Nov / 2024": "16",
+          "Dez / 2024": "10",
+          "Jan / 2025": "19",
+          "Fev / 2025": "21",
+          "Mar / 2025": "18",
+          "Abr / 2025": "13",
+          "Mai / 2025": "19",
+          "Jun / 2025": "13",
+          "Jul / 2025": "20",
+          "Ago / 2025": "1"
+        },
+        "total": "187"
       }
     }
   },
   {
     "id": 2,
     "unidade": "ALEXANDRIA - VARA ÚNICA",
-    "acervo_total": "2.399",
+    "acervo_total": "2.401",
     "processos_em_tramitacao": {
       "CONHECIMENTO": {
-        "Total": "1.265",
-        "+60 dias": "10",
+        "Total": "1.267",
+        "+60 dias": "15",
         "+100 dias": "4",
         "Não julgados": {
           "Total": "904",
-          "+60 dias": "9",
+          "+60 dias": "14",
           "+100 dias": "4"
         }
       },
@@ -77,31 +344,298 @@
         "+100 dias": "1"
       },
       "TOTAL": {
-        "Total": "1.958",
-        "+60 dias": "22",
+        "Total": "1.960",
+        "+60 dias": "27",
         "+100 dias": "7"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "22",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Inquérito Policial": {
+        "Total": "6",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Cartas": {
+        "Total": "34",
+        "+60 dias": "3",
+        "+100 dias": "0"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "30",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "TOTAL": {
+        "Total": "92",
+        "+60 dias": "3",
+        "+100 dias": "0"
+      }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "21",
+        "+60 dias": "4",
+        "+100 dias": "16",
+        "+730 dias": "0"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "10",
+        "+60 dias": "0",
+        "+100 dias": "10",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "46",
+        "+60 dias": "2",
+        "+100 dias": "40",
+        "+730 dias": "0"
+      },
+      "Outros Motivos": {
+        "Total": "272",
+        "+60 dias": "21",
+        "+100 dias": "205",
+        "+730 dias": "5"
+      },
+      "TOTAL": {
+        "Total": "349",
+        "+60 dias": "27",
+        "+100 dias": "271",
+        "+730 dias": "5"
+      }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "24",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Despacho": {
+        "Total": "13",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Sentença": {
+        "Total": "13",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Total de processos conclusos": {
+        "Total": "50",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "5",
+      "Total": "5"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "57",
+      "COJUD": "219",
+      "INQUÉRITO REMETIDO AO MP": "30",
+      "Total": "306"
+    },
+    "demonstrativo_de_distribuicoes": {
+      "Entradas por Distribuição": {
+        "mensal": {
+          "Set / 2024": "180",
+          "Out / 2024": "184",
+          "Nov / 2024": "168",
+          "Dez / 2024": "136",
+          "Jan / 2025": "210",
+          "Fev / 2025": "180",
+          "Mar / 2025": "173",
+          "Abr / 2025": "156",
+          "Mai / 2025": "256",
+          "Jun / 2025": "194",
+          "Jul / 2025": "146",
+          "Ago / 2025": "7"
+        },
+        "total": "1.990"
+      },
+      "Entradas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "14",
+          "Out / 2024": "15",
+          "Nov / 2024": "14",
+          "Dez / 2024": "22",
+          "Jan / 2025": "16",
+          "Fev / 2025": "13",
+          "Mar / 2025": "19",
+          "Abr / 2025": "23",
+          "Mai / 2025": "20",
+          "Jun / 2025": "21",
+          "Jul / 2025": "21",
+          "Ago / 2025": "1"
+        },
+        "total": "199"
+      },
+      "Saídas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "7",
+          "Out / 2024": "10",
+          "Nov / 2024": "8",
+          "Dez / 2024": "8",
+          "Jan / 2025": "5",
+          "Fev / 2025": "5",
+          "Mar / 2025": "12",
+          "Abr / 2025": "11",
+          "Mai / 2025": "15",
+          "Jun / 2025": "10",
+          "Jul / 2025": "24",
+          "Ago / 2025": "1"
+        },
+        "total": "116"
+      },
+      "Saldo (entradas - saídas)": {
+        "mensal": {
+          "Set / 2024": "187",
+          "Out / 2024": "189",
+          "Nov / 2024": "174",
+          "Dez / 2024": "150",
+          "Jan / 2025": "221",
+          "Fev / 2025": "188",
+          "Mar / 2025": "180",
+          "Abr / 2025": "168",
+          "Mai / 2025": "261",
+          "Jun / 2025": "205",
+          "Jul / 2025": "143",
+          "Ago / 2025": "7"
+        },
+        "total": "2.073"
+      }
+    },
+    "processos_baixados": {
+      "Baixados": {
+        "mensal": {
+          "Set / 2024": "259",
+          "Out / 2024": "275",
+          "Nov / 2024": "178",
+          "Dez / 2024": "127",
+          "Jan / 2025": "186",
+          "Fev / 2025": "236",
+          "Mar / 2025": "239",
+          "Abr / 2025": "229",
+          "Mai / 2025": "300",
+          "Jun / 2025": "227",
+          "Jul / 2025": "241",
+          "Ago / 2025": "9"
+        },
+        "total": "2.506"
+      }
+    },
+    "atos_judiciais_proferidos": {
+      "Decisões": {
+        "mensal": {
+          "Set / 2024": "468",
+          "Out / 2024": "401",
+          "Nov / 2024": "263",
+          "Dez / 2024": "236",
+          "Jan / 2025": "334",
+          "Fev / 2025": "324",
+          "Mar / 2025": "347",
+          "Abr / 2025": "330",
+          "Mai / 2025": "371",
+          "Jun / 2025": "278",
+          "Jul / 2025": "405",
+          "Ago / 2025": "12"
+        },
+        "total": "3.769"
+      },
+      "Despachos": {
+        "mensal": {
+          "Set / 2024": "515",
+          "Out / 2024": "632",
+          "Nov / 2024": "402",
+          "Dez / 2024": "329",
+          "Jan / 2025": "469",
+          "Fev / 2025": "495",
+          "Mar / 2025": "535",
+          "Abr / 2025": "418",
+          "Mai / 2025": "790",
+          "Jun / 2025": "561",
+          "Jul / 2025": "575",
+          "Ago / 2025": "21"
+        },
+        "total": "5.742"
+      },
+      "Julgamentos": {
+        "mensal": {
+          "Set / 2024": "268",
+          "Out / 2024": "287",
+          "Nov / 2024": "187",
+          "Dez / 2024": "122",
+          "Jan / 2025": "186",
+          "Fev / 2025": "215",
+          "Mar / 2025": "215",
+          "Abr / 2025": "193",
+          "Mai / 2025": "202",
+          "Jun / 2025": "194",
+          "Jul / 2025": "278",
+          "Ago / 2025": "7"
+        },
+        "total": "2.354"
+      },
+      "Julgamentos COM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "222",
+          "Out / 2024": "243",
+          "Nov / 2024": "165",
+          "Dez / 2024": "98",
+          "Jan / 2025": "156",
+          "Fev / 2025": "169",
+          "Mar / 2025": "170",
+          "Abr / 2025": "154",
+          "Mai / 2025": "178",
+          "Jun / 2025": "158",
+          "Jul / 2025": "236",
+          "Ago / 2025": "7"
+        },
+        "total": "1.956"
+      },
+      "Julgamentos SEM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "46",
+          "Out / 2024": "44",
+          "Nov / 2024": "22",
+          "Dez / 2024": "24",
+          "Jan / 2025": "30",
+          "Fev / 2025": "46",
+          "Mar / 2025": "45",
+          "Abr / 2025": "39",
+          "Mai / 2025": "24",
+          "Jun / 2025": "36",
+          "Jul / 2025": "42",
+          "Ago / 2025": "0"
+        },
+        "total": "398"
       }
     }
   },
   {
     "id": 3,
     "unidade": "ALMINO AFONSO - VARA ÚNICA",
-    "acervo_total": "2.197",
+    "acervo_total": "2.198",
     "processos_em_tramitacao": {
       "CONHECIMENTO": {
-        "Total": "1.033",
-        "+60 dias": "84",
-        "+100 dias": "97",
+        "Total": "1.034",
+        "+60 dias": "86",
+        "+100 dias": "99",
         "Não julgados": {
-          "Total": "722",
-          "+60 dias": "75",
-          "+100 dias": "70"
+          "Total": "719",
+          "+60 dias": "76",
+          "+100 dias": "72"
         }
       },
       "EXECUÇÃO": {
         "Total": "660",
-        "+60 dias": "62",
-        "+100 dias": "57"
+        "+60 dias": "58",
+        "+100 dias": "61"
       },
       "EXECUÇÃO FISCAL": {
         "Total": "14",
@@ -115,39 +649,306 @@
       },
       "EXECUÇÃO CRIMINAL": {
         "Total": "116",
-        "+60 dias": "30",
-        "+100 dias": "51"
+        "+60 dias": "24",
+        "+100 dias": "58"
       },
       "TOTAL": {
-        "Total": "1.823",
-        "+60 dias": "176",
-        "+100 dias": "208"
+        "Total": "1.824",
+        "+60 dias": "168",
+        "+100 dias": "221"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "6",
+        "+60 dias": "0",
+        "+100 dias": "1"
+      },
+      "Inquérito Policial": {
+        "Total": "35",
+        "+60 dias": "6",
+        "+100 dias": "3"
+      },
+      "Cartas": {
+        "Total": "17",
+        "+60 dias": "5",
+        "+100 dias": "7"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "29",
+        "+60 dias": "1",
+        "+100 dias": "16"
+      },
+      "TOTAL": {
+        "Total": "87",
+        "+60 dias": "12",
+        "+100 dias": "27"
+      }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "33",
+        "+60 dias": "2",
+        "+100 dias": "29",
+        "+730 dias": "0"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "0",
+        "+60 dias": "0",
+        "+100 dias": "0",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "47",
+        "+60 dias": "2",
+        "+100 dias": "43",
+        "+730 dias": "0"
+      },
+      "Outros Motivos": {
+        "Total": "207",
+        "+60 dias": "23",
+        "+100 dias": "127",
+        "+730 dias": "17"
+      },
+      "TOTAL": {
+        "Total": "287",
+        "+60 dias": "27",
+        "+100 dias": "199",
+        "+730 dias": "17"
+      }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "181",
+        "+60 dias": "17",
+        "+100 dias": "7"
+      },
+      "Despacho": {
+        "Total": "395",
+        "+60 dias": "51",
+        "+100 dias": "17"
+      },
+      "Sentença": {
+        "Total": "151",
+        "+60 dias": "37",
+        "+100 dias": "19"
+      },
+      "Total de processos conclusos": {
+        "Total": "727",
+        "+60 dias": "105",
+        "+100 dias": "43"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "1",
+      "Total": "1"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "57",
+      "COJUD": "40",
+      "INQUÉRITO REMETIDO AO MP": "27",
+      "Total": "124"
+    },
+    "demonstrativo_de_distribuicoes": {
+      "Entradas por Distribuição": {
+        "mensal": {
+          "Set / 2024": "173",
+          "Out / 2024": "148",
+          "Nov / 2024": "140",
+          "Dez / 2024": "102",
+          "Jan / 2025": "135",
+          "Fev / 2025": "118",
+          "Mar / 2025": "105",
+          "Abr / 2025": "78",
+          "Mai / 2025": "149",
+          "Jun / 2025": "109",
+          "Jul / 2025": "85",
+          "Ago / 2025": "7"
+        },
+        "total": "1.349"
+      },
+      "Entradas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "6",
+          "Out / 2024": "14",
+          "Nov / 2024": "20",
+          "Dez / 2024": "9",
+          "Jan / 2025": "16",
+          "Fev / 2025": "10",
+          "Mar / 2025": "10",
+          "Abr / 2025": "5",
+          "Mai / 2025": "4",
+          "Jun / 2025": "8",
+          "Jul / 2025": "12",
+          "Ago / 2025": "0"
+        },
+        "total": "114"
+      },
+      "Saídas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "3",
+          "Out / 2024": "6",
+          "Nov / 2024": "19",
+          "Dez / 2024": "3",
+          "Jan / 2025": "4",
+          "Fev / 2025": "3",
+          "Mar / 2025": "6",
+          "Abr / 2025": "6",
+          "Mai / 2025": "1",
+          "Jun / 2025": "3",
+          "Jul / 2025": "15",
+          "Ago / 2025": "0"
+        },
+        "total": "69"
+      },
+      "Saldo (entradas - saídas)": {
+        "mensal": {
+          "Set / 2024": "176",
+          "Out / 2024": "156",
+          "Nov / 2024": "141",
+          "Dez / 2024": "108",
+          "Jan / 2025": "147",
+          "Fev / 2025": "125",
+          "Mar / 2025": "109",
+          "Abr / 2025": "77",
+          "Mai / 2025": "152",
+          "Jun / 2025": "114",
+          "Jul / 2025": "82",
+          "Ago / 2025": "7"
+        },
+        "total": "1.394"
+      }
+    },
+    "processos_baixados": {
+      "Baixados": {
+        "mensal": {
+          "Set / 2024": "209",
+          "Out / 2024": "234",
+          "Nov / 2024": "260",
+          "Dez / 2024": "103",
+          "Jan / 2025": "222",
+          "Fev / 2025": "213",
+          "Mar / 2025": "142",
+          "Abr / 2025": "148",
+          "Mai / 2025": "238",
+          "Jun / 2025": "182",
+          "Jul / 2025": "278",
+          "Ago / 2025": "1"
+        },
+        "total": "2.230"
+      }
+    },
+    "atos_judiciais_proferidos": {
+      "Decisões": {
+        "mensal": {
+          "Set / 2024": "535",
+          "Out / 2024": "471",
+          "Nov / 2024": "388",
+          "Dez / 2024": "296",
+          "Jan / 2025": "362",
+          "Fev / 2025": "491",
+          "Mar / 2025": "380",
+          "Abr / 2025": "386",
+          "Mai / 2025": "448",
+          "Jun / 2025": "429",
+          "Jul / 2025": "184",
+          "Ago / 2025": "6"
+        },
+        "total": "4.376"
+      },
+      "Despachos": {
+        "mensal": {
+          "Set / 2024": "328",
+          "Out / 2024": "331",
+          "Nov / 2024": "336",
+          "Dez / 2024": "178",
+          "Jan / 2025": "269",
+          "Fev / 2025": "361",
+          "Mar / 2025": "256",
+          "Abr / 2025": "258",
+          "Mai / 2025": "246",
+          "Jun / 2025": "210",
+          "Jul / 2025": "169",
+          "Ago / 2025": "8"
+        },
+        "total": "2.950"
+      },
+      "Julgamentos": {
+        "mensal": {
+          "Set / 2024": "238",
+          "Out / 2024": "235",
+          "Nov / 2024": "179",
+          "Dez / 2024": "136",
+          "Jan / 2025": "166",
+          "Fev / 2025": "86",
+          "Mar / 2025": "160",
+          "Abr / 2025": "168",
+          "Mai / 2025": "196",
+          "Jun / 2025": "222",
+          "Jul / 2025": "186",
+          "Ago / 2025": "21"
+        },
+        "total": "1.993"
+      },
+      "Julgamentos COM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "228",
+          "Out / 2024": "221",
+          "Nov / 2024": "163",
+          "Dez / 2024": "130",
+          "Jan / 2025": "152",
+          "Fev / 2025": "77",
+          "Mar / 2025": "148",
+          "Abr / 2025": "163",
+          "Mai / 2025": "185",
+          "Jun / 2025": "210",
+          "Jul / 2025": "177",
+          "Ago / 2025": "21"
+        },
+        "total": "1.875"
+      },
+      "Julgamentos SEM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "10",
+          "Out / 2024": "14",
+          "Nov / 2024": "16",
+          "Dez / 2024": "6",
+          "Jan / 2025": "14",
+          "Fev / 2025": "9",
+          "Mar / 2025": "12",
+          "Abr / 2025": "5",
+          "Mai / 2025": "11",
+          "Jun / 2025": "12",
+          "Jul / 2025": "9",
+          "Ago / 2025": "0"
+        },
+        "total": "118"
       }
     }
   },
   {
     "id": 4,
     "unidade": "ANGICOS - VARA ÚNICA",
-    "acervo_total": "3.786",
+    "acervo_total": "3.788",
     "processos_em_tramitacao": {
       "CONHECIMENTO": {
-        "Total": "2.436",
-        "+60 dias": "439",
-        "+100 dias": "496",
+        "Total": "2.438",
+        "+60 dias": "451",
+        "+100 dias": "500",
         "Não julgados": {
-          "Total": "1.916",
-          "+60 dias": "392",
-          "+100 dias": "462"
+          "Total": "1.914",
+          "+60 dias": "399",
+          "+100 dias": "466"
         }
       },
       "EXECUÇÃO": {
         "Total": "784",
-        "+60 dias": "169",
-        "+100 dias": "142"
+        "+60 dias": "174",
+        "+100 dias": "144"
       },
       "EXECUÇÃO FISCAL": {
         "Total": "89",
-        "+60 dias": "16",
+        "+60 dias": "17",
         "+100 dias": "19",
         "Não julgados": {
           "Total": "73",
@@ -157,13 +958,280 @@
       },
       "EXECUÇÃO CRIMINAL": {
         "Total": "49",
-        "+60 dias": "2",
-        "+100 dias": "1"
+        "+60 dias": "1",
+        "+100 dias": "2"
       },
       "TOTAL": {
-        "Total": "3.358",
-        "+60 dias": "626",
-        "+100 dias": "658"
+        "Total": "3.360",
+        "+60 dias": "643",
+        "+100 dias": "665"
+      }
+    },
+    "procedimentos_e_peticoes_em_tramitacao": {
+      "Auto de prisão em flagrante": {
+        "Total": "26",
+        "+60 dias": "9",
+        "+100 dias": "0"
+      },
+      "Inquérito Policial": {
+        "Total": "56",
+        "+60 dias": "9",
+        "+100 dias": "2"
+      },
+      "Cartas": {
+        "Total": "22",
+        "+60 dias": "0",
+        "+100 dias": "0"
+      },
+      "Outros procedimentos ou petições": {
+        "Total": "80",
+        "+60 dias": "9",
+        "+100 dias": "7"
+      },
+      "TOTAL": {
+        "Total": "184",
+        "+60 dias": "27",
+        "+100 dias": "9"
+      }
+    },
+    "suspensos_arquivo_provisorio": {
+      "Recurso Especial Repetitivo": {
+        "Total": "38",
+        "+60 dias": "0",
+        "+100 dias": "12",
+        "+730 dias": "0"
+      },
+      "Recurso Extraordinário com Repercussão Geral": {
+        "Total": "0",
+        "+60 dias": "0",
+        "+100 dias": "0",
+        "+730 dias": "0"
+      },
+      "Arquivado Provisoriamente": {
+        "Total": "8",
+        "+60 dias": "0",
+        "+100 dias": "7",
+        "+730 dias": "0"
+      },
+      "Outros Motivos": {
+        "Total": "198",
+        "+60 dias": "13",
+        "+100 dias": "126",
+        "+730 dias": "35"
+      },
+      "TOTAL": {
+        "Total": "244",
+        "+60 dias": "13",
+        "+100 dias": "145",
+        "+730 dias": "35"
+      }
+    },
+    "processos_conclusos_por_tipo": {
+      "Decisão": {
+        "Total": "572",
+        "+60 dias": "204",
+        "+100 dias": "287"
+      },
+      "Despacho": {
+        "Total": "276",
+        "+60 dias": "84",
+        "+100 dias": "140"
+      },
+      "Sentença": {
+        "Total": "296",
+        "+60 dias": "73",
+        "+100 dias": "199"
+      },
+      "Total de processos conclusos": {
+        "Total": "1.144",
+        "+60 dias": "361",
+        "+100 dias": "626"
+      }
+    },
+    "controle_de_prisoes": {
+      "Não identificada": "6",
+      "Total": "6"
+    },
+    "controle_de_diligencias": {
+      "Aguardando Perícia, Laudo Técnico ou Outros": "29",
+      "COJUD": "2",
+      "INQUÉRITO REMETIDO AO MP": "7",
+      "Total": "38"
+    },
+    "demonstrativo_de_distribuicoes": {
+      "Entradas por Distribuição": {
+        "mensal": {
+          "Set / 2024": "135",
+          "Out / 2024": "72",
+          "Nov / 2024": "114",
+          "Dez / 2024": "118",
+          "Jan / 2025": "113",
+          "Fev / 2025": "118",
+          "Mar / 2025": "95",
+          "Abr / 2025": "125",
+          "Mai / 2025": "122",
+          "Jun / 2025": "140",
+          "Jul / 2025": "140",
+          "Ago / 2025": "5"
+        },
+        "total": "1.297"
+      },
+      "Entradas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "4",
+          "Out / 2024": "9",
+          "Nov / 2024": "7",
+          "Dez / 2024": "6",
+          "Jan / 2025": "14",
+          "Fev / 2025": "12",
+          "Mar / 2025": "8",
+          "Abr / 2025": "11",
+          "Mai / 2025": "5",
+          "Jun / 2025": "15",
+          "Jul / 2025": "7",
+          "Ago / 2025": "0"
+        },
+        "total": "98"
+      },
+      "Saídas por Redistribuição": {
+        "mensal": {
+          "Set / 2024": "7",
+          "Out / 2024": "9",
+          "Nov / 2024": "1",
+          "Dez / 2024": "8",
+          "Jan / 2025": "3",
+          "Fev / 2025": "5",
+          "Mar / 2025": "3",
+          "Abr / 2025": "5",
+          "Mai / 2025": "5",
+          "Jun / 2025": "4",
+          "Jul / 2025": "13",
+          "Ago / 2025": "0"
+        },
+        "total": "63"
+      },
+      "Saldo (entradas - saídas)": {
+        "mensal": {
+          "Set / 2024": "132",
+          "Out / 2024": "72",
+          "Nov / 2024": "120",
+          "Dez / 2024": "116",
+          "Jan / 2025": "124",
+          "Fev / 2025": "125",
+          "Mar / 2025": "100",
+          "Abr / 2025": "131",
+          "Mai / 2025": "122",
+          "Jun / 2025": "151",
+          "Jul / 2025": "134",
+          "Ago / 2025": "5"
+        },
+        "total": "1.332"
+      }
+    },
+    "processos_baixados": {
+      "Baixados": {
+        "mensal": {
+          "Set / 2024": "176",
+          "Out / 2024": "141",
+          "Nov / 2024": "110",
+          "Dez / 2024": "119",
+          "Jan / 2025": "109",
+          "Fev / 2025": "226",
+          "Mar / 2025": "135",
+          "Abr / 2025": "140",
+          "Mai / 2025": "169",
+          "Jun / 2025": "108",
+          "Jul / 2025": "166",
+          "Ago / 2025": "0"
+        },
+        "total": "1.599"
+      }
+    },
+    "atos_judiciais_proferidos": {
+      "Decisões": {
+        "mensal": {
+          "Set / 2024": "106",
+          "Out / 2024": "119",
+          "Nov / 2024": "126",
+          "Dez / 2024": "127",
+          "Jan / 2025": "109",
+          "Fev / 2025": "222",
+          "Mar / 2025": "163",
+          "Abr / 2025": "156",
+          "Mai / 2025": "80",
+          "Jun / 2025": "169",
+          "Jul / 2025": "217",
+          "Ago / 2025": "6"
+        },
+        "total": "1.600"
+      },
+      "Despachos": {
+        "mensal": {
+          "Set / 2024": "162",
+          "Out / 2024": "188",
+          "Nov / 2024": "164",
+          "Dez / 2024": "68",
+          "Jan / 2025": "104",
+          "Fev / 2025": "210",
+          "Mar / 2025": "132",
+          "Abr / 2025": "186",
+          "Mai / 2025": "74",
+          "Jun / 2025": "91",
+          "Jul / 2025": "125",
+          "Ago / 2025": "5"
+        },
+        "total": "1.509"
+      },
+      "Julgamentos": {
+        "mensal": {
+          "Set / 2024": "118",
+          "Out / 2024": "214",
+          "Nov / 2024": "150",
+          "Dez / 2024": "118",
+          "Jan / 2025": "121",
+          "Fev / 2025": "122",
+          "Mar / 2025": "120",
+          "Abr / 2025": "101",
+          "Mai / 2025": "175",
+          "Jun / 2025": "146",
+          "Jul / 2025": "171",
+          "Ago / 2025": "6"
+        },
+        "total": "1.562"
+      },
+      "Julgamentos COM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "106",
+          "Out / 2024": "181",
+          "Nov / 2024": "126",
+          "Dez / 2024": "106",
+          "Jan / 2025": "101",
+          "Fev / 2025": "106",
+          "Mar / 2025": "92",
+          "Abr / 2025": "85",
+          "Mai / 2025": "159",
+          "Jun / 2025": "134",
+          "Jul / 2025": "148",
+          "Ago / 2025": "6"
+        },
+        "total": "1.350"
+      },
+      "Julgamentos SEM Resolução Mérito": {
+        "mensal": {
+          "Set / 2024": "12",
+          "Out / 2024": "33",
+          "Nov / 2024": "24",
+          "Dez / 2024": "12",
+          "Jan / 2025": "20",
+          "Fev / 2025": "16",
+          "Mar / 2025": "28",
+          "Abr / 2025": "16",
+          "Mai / 2025": "16",
+          "Jun / 2025": "12",
+          "Jul / 2025": "23",
+          "Ago / 2025": "0"
+        },
+        "total": "212"
       }
     }
   }

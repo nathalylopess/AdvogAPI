@@ -30,6 +30,89 @@ class ProcessosTramitacao(BaseModel):
             "mais_100_dias": lambda v: str(v)
         }
 
+class ProcedimentoPeticao(BaseModel):
+    total: str = Field(..., example="77", alias="Total")
+    mais_60_dias: str = Field(..., example="6", alias="+60 dias")
+    mais_100_dias: str = Field(..., example="0", alias="+100 dias")
+
+    class Config:
+        allow_population_by_field_name = True
+
+class SuspensosArquivoProvisorioItem(BaseModel):
+    total: str = Field(..., alias="Total", example="18")
+    mais_60_dias: str = Field(..., alias="+60 dias", example="0")
+    mais_100_dias: str = Field(..., alias="+100 dias", example="14")
+    mais_730_dias: str = Field(..., alias="+730 dias", example="4")
+
+    class Config:
+        allow_population_by_field_name = True
+
+class ProcessoConclusoPorTipo(BaseModel):
+    total: str = Field(..., alias="Total", example="68")
+    mais_60_dias: str = Field(..., alias="+60 dias", example="0")
+    mais_100_dias: str = Field(..., alias="+100 dias", example="0")
+
+    class Config:
+        allow_population_by_field_name = True
+
+class ControleDePrisoes(BaseModel):
+    total: str = Field(..., alias="Total", example="6")
+
+    class Config:
+        allow_population_by_field_name = True
+
+class ControleDeDiligenciasItem(BaseModel):
+    total: str = Field(..., alias="Total", example="62")
+
+    class Config:
+        allow_population_by_field_name = True
+
+class DistribuicaoMensal(BaseModel):
+    mensal: Dict[str, str] = Field(
+        ...,
+        example={
+            "Set / 2024": "70",
+            "Out / 2024": "101",
+            "Nov / 2024": "87"
+        }
+    )
+    total: str = Field(..., example="1107")
+
+class ProcessosBaixadosItem(BaseModel):
+    mensal: Dict[str, str] = Field(
+        ...,
+        description="Valores mensais dos processos baixados nos últimos 12 meses",
+        example={
+            "Set / 2024": "80",
+            "Out / 2024": "174",
+            "Nov / 2024": "159",
+            "Dez / 2024": "103",
+            "Jan / 2025": "105",
+            "Fev / 2025": "139",
+            "Mar / 2025": "160",
+            "Abr / 2025": "104",
+            "Mai / 2025": "163",
+            "Jun / 2025": "145",
+            "Jul / 2025": "186",
+            "Ago / 2025": "8"
+        }
+    )
+    total: str = Field(..., description="Total de processos baixados", example="1526")
+
+class AtoJudicial(BaseModel):
+    mensal: Dict[str, str] = Field(
+        ..., example={
+            "Set / 2024": "145",
+            "Out / 2024": "430",
+            "Nov / 2024": "172"
+        },
+        description="Valores mensais por mês/ano"
+    )
+    total: str = Field(..., example="3075", description="Total de atos do tipo no período")
+
+    class Config:
+        allow_population_by_field_name = True
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -46,6 +129,173 @@ class UnidadeData(BaseModel):
                     "+60 dias": "60",
                     "+100 dias": "30"
                 }
+            }
+        }
+    )
+    procedimentos_e_peticoes_em_tramitacao: Optional[Dict[str, ProcedimentoPeticao]] = Field(
+        None,
+        alias="procedimentos_e_peticoes_em_tramitacao",
+        description="Dados dos procedimentos e petições em tramitação"
+    )
+    suspensos_arquivo_provisorio: Optional[Dict[str, SuspensosArquivoProvisorioItem]] = Field(
+        None,
+        description="Dados da tabela de Suspensos / Arquivo provisório",
+        example={
+            "Recurso Especial Repetitivo": {
+                "Total": "18",
+                "+60 dias": "0",
+                "+100 dias": "14",
+                "+730 dias": "4"
+            },
+            "Outros Motivos": {
+                "Total": "197",
+                "+60 dias": "16",
+                "+100 dias": "115",
+                "+730 dias": "38"
+            }
+        }
+    )
+
+    processos_conclusos_por_tipo: Optional[Dict[str, ProcessoConclusoPorTipo]] = Field(
+        None,
+        description="Dados da tabela de Processos Conclusos por Tipo",
+        example={
+            "Decisão": {
+                "Total": "68",
+                "+60 dias": "0",
+                "+100 dias": "0"
+            },
+            "Despacho": {
+                "Total": "13",
+                "+60 dias": "0",
+                "+100 dias": "0"
+            },
+            "Sentença": {
+                "Total": "21",
+                "+60 dias": "1",
+                "+100 dias": "0"
+            },
+            "Total de processos conclusos": {
+                "Total": "102",
+                "+60 dias": "1",
+                "+100 dias": "0"
+            }
+        }
+    )
+
+    controle_de_prisoes: Optional[Dict[str, ControleDePrisoes]] = Field(
+        None,
+        description="Dados da tabela de Controle de Prisões",
+        example={
+            "Não identificada": {
+                "Total": "6"
+            },
+            "Preventiva": {
+                "Total": "12"
+            },
+            "Temporária": {
+                "Total": "3"
+            }
+        }
+    )
+
+    controle_de_diligencias: Optional[Dict[str, ControleDeDiligenciasItem]] = Field(
+        None,
+        description="Dados da tabela de Controle de Diligências (PJe)",
+        example={
+            "Aguardando Perícia, Laudo Técnico ou Outros": {
+                "Total": "62"
+            },
+            "COJUD": {
+                "Total": "39"
+            },
+            "INQUÉRITO REMETIDO AO MP": {
+                "Total": "7"
+            }
+        }
+    )
+
+    demonstrativo_de_distribuicoes: Optional[Dict[str, DistribuicaoMensal]] = Field(
+        None,
+        description="Dados do Demonstrativo de Distribuições (últimos 12 meses)",
+        example={
+            "Entradas por Distribuição": {
+                "mensal": {
+                    "Set / 2024": "70",
+                    "Out / 2024": "101",
+                    "Nov / 2024": "87"
+                },
+                "total": "1107"
+            },
+            "Entradas por Redistribuição": {
+                "mensal": {
+                    "Set / 2024": "7",
+                    "Out / 2024": "12",
+                    "Nov / 2024": "11"
+                },
+                "total": "146"
+            },
+            "Saídas por Redistribuição": {
+                "mensal": {
+                    "Set / 2024": "2",
+                    "Out / 2024": "5",
+                    "Nov / 2024": "8"
+                },
+                "total": "71"
+            },
+            "Saldo (entradas - saídas)": {
+                "mensal": {
+                    "Set / 2024": "75",
+                    "Out / 2024": "108",
+                    "Nov / 2024": "90"
+                },
+                "total": "1182"
+            }
+        }
+    )
+    
+    processos_baixados: Optional[Dict[str, ProcessosBaixadosItem]] = Field(
+        None,
+        description="Dados dos processos baixados nos últimos 12 meses",
+        example={
+            "Baixados": {
+                "mensal": {
+                    "Set / 2024": "80",
+                    "Out / 2024": "174",
+                    "Nov / 2024": "159",
+                    "Dez / 2024": "103",
+                    "Jan / 2025": "105",
+                    "Fev / 2025": "139",
+                    "Mar / 2025": "160",
+                    "Abr / 2025": "104",
+                    "Mai / 2025": "163",
+                    "Jun / 2025": "145",
+                    "Jul / 2025": "186",
+                    "Ago / 2025": "8"
+                },
+                "total": "1526"
+            }
+        }
+    )
+
+    atos_judiciais_proferidos: Optional[Dict[str, AtoJudicial]] = Field(
+        None,
+        description="Atos judiciais proferidos nos últimos 12 meses",
+        example={
+            "Decisões": {
+                "mensal": {
+                    "Set / 2024": "145",
+                    "Out / 2024": "430",
+                    "Nov / 2024": "172"
+                },
+                "total": "3075"
+            },
+            "Despachos": {
+                "mensal": {
+                    "Set / 2024": "182",
+                    "Out / 2024": "224"
+                },
+                "total": "3017"
             }
         }
     )
