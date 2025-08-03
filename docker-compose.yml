@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   api:
     build: .
@@ -30,3 +28,16 @@ services:
     tmpfs:
       - /tmp
     entrypoint: ["./wait-for-it.sh", "chrome:4444", "--strict", "--timeout=30", "--", "python", "-m", "app.scripts.run_scraper"]
+
+  qodana:
+    image: jetbrains/qodana-python
+    container_name: qodana
+    volumes:
+      - ./:/data/project
+      - qodana-cache:/data/cache
+    command: ["qodana", "--show-report"]
+    environment:
+      - QODANA_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0IjoiOWtRTmQiLCJvcmdhbml6YXRpb24iOiJKZ0pkZyIsInRva2VuIjoibDA1R1cifQ.OM1ciFOJOYK38B84zO09iZ-O05zYHQe5gUekBFAqEls
+
+volumes:
+  qodana-cache:
