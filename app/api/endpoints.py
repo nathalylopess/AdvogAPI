@@ -1,14 +1,33 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordRequestForm
 from app.services.data_service import DataService
-from app.models.schemas import UnidadeData
+from app.models.schemas import UnidadeData, Cliente, UserCreate, Token
 from typing import List, Dict, Optional
 import logging
+
+from datetime import timedelta
+
+from app.api.authentication import (
+    authenticate_user,
+    create_access_token,
+    get_current_active_user,
+    hash_password,
+    clientes_db,
+    ACCESS_TOKEN_EXPIRE_MINUTES
+)
 
 # Router principal - Rotas gerais
 router = APIRouter(
     prefix="/api/v1",
     tags=["unidades"],
+    responses={404: {"description": "Não encontrado"}}
+)
+
+# Router de autenticação
+router_auth = APIRouter(
+    prefix="/api/v1/auth",
+    tags=["autenticação"],
     responses={404: {"description": "Não encontrado"}}
 )
 
@@ -20,6 +39,60 @@ router_unidade = APIRouter(
 )
 
 logger = logging.getLogger(__name__)
+
+# Rotas de Autenticação
+@router_auth.post(
+    "/token",
+    response_model=Token,
+    summary="Obter token de acesso",
+    description="Autentica o usuário e retorna um token JWT para uso nas rotas protegidas"
+)
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciais inválidas",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token = create_access_token(
+        data={"sub": user.username},
+        expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@router_auth.post(
+    "/usuarios",
+    response_model=Cliente,
+    summary="Criar novo usuário",
+    description="Registra um novo usuário no sistema",
+    status_code=status.HTTP_201_CREATED
+)
+async def criar_usuario(usuario: UserCreate):
+    if usuario.username in clientes_db:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Usuário já existe"
+        )
+
+    db_usuario = Cliente(
+        **usuario.dict(exclude={"password"}),
+        hashed_password=hash_password(usuario.password),
+        id=len(clientes_db) + 1
+    )
+
+    clientes_db[usuario.username] = db_usuario
+    return db_usuario
+
+@router_auth.get(
+    "/usuarios/atual",
+    response_model=Cliente,
+    summary="Dados do usuário atual",
+    description="Retorna os dados do usuário autenticado"
+
+)
+async def get_usuario_atual(current_user: Cliente = Depends(get_current_active_user)):
+    return current_user
 
 def get_data_service():
     return DataService(auto_load=True)
@@ -105,7 +178,11 @@ def find_unit_by_id(data: List[Dict], unit_id: int) -> Dict:
     summary="Lista todas as unidades",
     description="Retorna todos os dados coletados das unidades judiciárias"
 )
-async def list_unidades(service: DataService = Depends(get_data_service)):
+async def list_unidades(
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
+):
+    
     service.debug_file_path()
 
     if not service.data:
@@ -123,7 +200,8 @@ async def list_unidades(service: DataService = Depends(get_data_service)):
     description="Retorna os dados de processos em tramitação para todas as unidades"
 )
 async def get_processos(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -151,7 +229,8 @@ async def get_processos(
     description="Retorna os dados de procedimentos e petições em tramitação para todas as unidades"
 )
 async def get_procedimentos(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -180,7 +259,8 @@ async def get_procedimentos(
     description="Retorna os dados de processos suspensos ou em arquivo provisório para todas as unidades"
 )
 async def get_suspensos_arquivo_provisorio(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -209,7 +289,8 @@ async def get_suspensos_arquivo_provisorio(
     description="Retorna os dados de processos conclusos por tipo para todas as unidades judiciárias"
 )
 async def get_processos_conclusos_por_tipo(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         def safe_str(value):
@@ -250,7 +331,8 @@ async def get_processos_conclusos_por_tipo(
     description="Retorna os dados da tabela de Controle de Prisões de todas as unidades judiciárias"
 )
 async def get_controle_de_prisoes(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -280,7 +362,8 @@ async def get_controle_de_prisoes(
     description="Retorna os dados da tabela de Controle de Diligências (PJe) de todas as unidades"
 )
 async def get_controle_de_diligencias(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -309,7 +392,8 @@ async def get_controle_de_diligencias(
     description="Retorna os dados do Demonstrativo de Distribuições (últimos 12 meses) de todas as unidades"
 )
 async def get_distribuicoes(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -338,7 +422,8 @@ async def get_distribuicoes(
     description="Retorna os dados da tabela de processos baixados (últimos 12 meses) de todas as unidades"
 )
 async def get_processos_baixados(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -367,7 +452,8 @@ async def get_processos_baixados(
     description="Retorna os dados da tabela de atos judiciais proferidos (últimos 12 meses) de todas as unidades"
 )
 async def get_atos_judiciais_proferidos(
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         resultados = []
@@ -397,7 +483,8 @@ async def get_atos_judiciais_proferidos(
 )
 async def get_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -415,7 +502,8 @@ async def get_unidade(
 )
 async def get_processos_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -437,7 +525,8 @@ async def get_processos_unidade(
 )
 async def get_procedimentos_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -461,7 +550,8 @@ async def get_procedimentos_unidade(
 )
 async def get_suspensos_arquivo_provisorio_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -485,7 +575,8 @@ async def get_suspensos_arquivo_provisorio_unidade(
 )
 async def get_processos_conclusos_por_tipo(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -522,7 +613,8 @@ async def get_processos_conclusos_por_tipo(
 
 async def get_controle_de_prisoes(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -545,7 +637,8 @@ async def get_controle_de_prisoes(
 )
 async def get_controle_de_diligencias_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -569,7 +662,8 @@ async def get_controle_de_diligencias_unidade(
 )
 async def get_distribuicoes_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -592,7 +686,8 @@ async def get_distribuicoes_unidade(
 )
 async def get_processos_baixados_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
@@ -615,7 +710,8 @@ async def get_processos_baixados_unidade(
 )
 async def get_atos_judiciais_proferidos_unidade(
     unit_id: int,
-    service: DataService = Depends(get_data_service)
+    service: DataService = Depends(get_data_service),
+    current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
         unit = find_unit_by_id(service.data, unit_id)
