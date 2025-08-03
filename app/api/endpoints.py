@@ -310,3 +310,26 @@ async def get_processos_baixados_unidade(
     except Exception as e:
         logger.error(f"Erro ao processar processos baixados da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar processos baixados da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/atos-judiciais",
+    summary="Atos judiciais proferidos de uma unidade específica",
+    description="Retorna apenas os dados da tabela de atos judiciais proferidos nos últimos 12 meses"
+)
+async def get_atos_judiciais_proferidos_unidade(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+        atos = unit.get("atos_judiciais_proferidos")
+
+        if atos is None:
+            raise HTTPException(404, f"A unidade {unit_id} não possui dados de atos judiciais proferidos")
+
+        return JSONResponse(content=atos)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar atos judiciais da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar atos judiciais da unidade {unit_id}")

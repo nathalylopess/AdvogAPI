@@ -68,6 +68,9 @@ def process_unit(scraper, index: int) -> Dict:
         console.print("[green]✔ Chamando get_processos_baixados()[/]")
         baixados = get_processos_baixados(scraper)
 
+        console.print("[green]✔ Chamando get_atos_judiciais_proferidos()[/]")
+        atos = get_atos_judiciais_proferidos(scraper)
+
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
 
         return {
@@ -81,7 +84,8 @@ def process_unit(scraper, index: int) -> Dict:
             "controle_de_prisoes": controle_prisoes,
             "controle_de_diligencias": diligencias,
             "demonstrativo_de_distribuicoes": demonstrativo_de_distribuicoes,
-            "processos_baixados": baixados
+            "processos_baixados": baixados,
+            "atos_judiciais_proferidos": atos 
         }
 
     except StaleElementReferenceException:
@@ -436,6 +440,41 @@ def get_processos_baixados(scraper) -> Dict:
         console.print(f"[bold red]❌ Erro ao coletar Processos Baixados:[/] {str(e)}")
 
     return baixados
+
+def get_atos_judiciais_proferidos(scraper) -> Dict:
+    atos = {}
+
+    try:
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[contains(@class, 'table-data')]//div[contains(text(), 'Atos judiciais proferidos')]/following-sibling::table[1]"
+            )),
+            timeout=10,
+            error_msg="Tabela de atos judiciais não encontrada"
+        )
+
+        # Coleta os cabeçalhos das colunas (meses)
+        headers = table.find_elements(By.XPATH, ".//thead/tr/th")
+        meses = [h.text.strip() for h in headers[1:-1]]  # ignora a primeira (descrição) e última (total)
+
+        rows = table.find_elements(By.XPATH, ".//tbody/tr")
+        for row in rows:
+            tipo = row.find_element(By.XPATH, "./td[1]").text.strip()
+            celulas = row.find_elements(By.XPATH, "./td[position() > 1]")  # ignora a descrição
+
+            if len(celulas) >= len(meses) + 1:  # +1 por causa da coluna 'Total'
+                valores = [c.text.strip() for c in celulas]
+                atos[tipo] = {
+                    "mensal": dict(zip(meses, valores[:-1])),
+                    "total": valores[-1]
+                }
+
+    except Exception as e:
+        console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Atos Judiciais'. Erro: {str(e)}")
+
+    return atos
 
 def parse_processos_data(cells) -> Dict:
     return {

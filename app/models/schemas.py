@@ -99,6 +99,20 @@ class ProcessosBaixadosItem(BaseModel):
     )
     total: str = Field(..., description="Total de processos baixados", example="1526")
 
+class AtoJudicial(BaseModel):
+    mensal: Dict[str, str] = Field(
+        ..., example={
+            "Set / 2024": "145",
+            "Out / 2024": "430",
+            "Nov / 2024": "172"
+        },
+        description="Valores mensais por mês/ano"
+    )
+    total: str = Field(..., example="3075", description="Total de atos do tipo no período")
+
+    class Config:
+        allow_population_by_field_name = True
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -260,6 +274,28 @@ class UnidadeData(BaseModel):
                     "Ago / 2025": "8"
                 },
                 "total": "1526"
+            }
+        }
+    )
+
+    atos_judiciais_proferidos: Optional[Dict[str, AtoJudicial]] = Field(
+        None,
+        description="Atos judiciais proferidos nos últimos 12 meses",
+        example={
+            "Decisões": {
+                "mensal": {
+                    "Set / 2024": "145",
+                    "Out / 2024": "430",
+                    "Nov / 2024": "172"
+                },
+                "total": "3075"
+            },
+            "Despachos": {
+                "mensal": {
+                    "Set / 2024": "182",
+                    "Out / 2024": "224"
+                },
+                "total": "3017"
             }
         }
     )
