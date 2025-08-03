@@ -41,34 +41,15 @@ def process_unit(scraper, index: int) -> Dict:
         select = Select(scraper.driver.find_element(By.ID, "unidade"))
         unidade = select.first_selected_option.text.strip()
 
-        console.print("[green]✔ Chamando get_acervo()[/]")
         acervo = get_acervo(scraper)
-
-        console.print("[green]✔ Chamando get_processos_em_tramitacao()[/]")
         processos = get_processos_em_tramitacao(scraper)
-
-        console.print("[green]✔ Chamando get_procedimentos_e_peticoes_em_tramitacao()[/]")
         procedimentos = get_procedimentos_e_peticoes_em_tramitacao(scraper)
-
-        console.print("[green]✔ Chamando get_suspensos_arquivo_provisorio()[/]")
         suspensos_arquivo_provisorio = get_suspensos_arquivo_provisorio(scraper)
-
-        console.print("[green]✔ Chamando get_processos_conclusos_por_tipo()[/]")
         conclusos = get_processos_conclusos_por_tipo(scraper)
-
-        console.print("[green]✔ Chamando get_controle_de_prisoes()[/]")
         controle_prisoes = get_controle_de_prisoes(scraper)
-
-        console.print("[green]✔ Chamando get_controle_de_diligencias()[/]")
         diligencias = get_controle_de_diligencias(scraper)
-
-        console.print("[green]✔ Chamando get_demonstrativo_de_distribuicoes()[/]")
         demonstrativo_de_distribuicoes = get_demonstrativo_de_distribuicoes(scraper)
-
-        console.print("[green]✔ Chamando get_processos_baixados()[/]")
         baixados = get_processos_baixados(scraper)
-
-        console.print("[green]✔ Chamando get_atos_judiciais_proferidos()[/]")
         atos = get_atos_judiciais_proferidos(scraper)
 
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
