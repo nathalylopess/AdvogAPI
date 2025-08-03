@@ -100,7 +100,7 @@ class DataService:
 
     def debug_file_path(self):
         """Exibe informações detalhadas sobre o arquivo de dados"""
-        console.print(f"\n[bold]DEBUG - Caminho do arquivo:[/]")
+        console.print("\n[bold]DEBUG - Caminho do arquivo:[/]")
         console.print(f"• Relativo: [cyan]{self.data_file}[/]")
         console.print(f"• Absoluto: [cyan]{self.data_file.absolute()}[/]")
         console.print(f"• Existe? [{'green' if self.data_file.exists() else 'red'}]{self.data_file.exists()}[/]")
