@@ -78,6 +78,27 @@ class DistribuicaoMensal(BaseModel):
     )
     total: str = Field(..., example="1107")
 
+class ProcessosBaixadosItem(BaseModel):
+    mensal: Dict[str, str] = Field(
+        ...,
+        description="Valores mensais dos processos baixados nos últimos 12 meses",
+        example={
+            "Set / 2024": "80",
+            "Out / 2024": "174",
+            "Nov / 2024": "159",
+            "Dez / 2024": "103",
+            "Jan / 2025": "105",
+            "Fev / 2025": "139",
+            "Mar / 2025": "160",
+            "Abr / 2025": "104",
+            "Mai / 2025": "163",
+            "Jun / 2025": "145",
+            "Jul / 2025": "186",
+            "Ago / 2025": "8"
+        }
+    )
+    total: str = Field(..., description="Total de processos baixados", example="1526")
+
 class UnidadeData(BaseModel):
     id: int = Field(..., example=1)
     unidade: str = Field(..., example="1ª Vara Cível")
@@ -219,5 +240,29 @@ class UnidadeData(BaseModel):
         }
     )
     
+    processos_baixados: Optional[Dict[str, ProcessosBaixadosItem]] = Field(
+        None,
+        description="Dados dos processos baixados nos últimos 12 meses",
+        example={
+            "Baixados": {
+                "mensal": {
+                    "Set / 2024": "80",
+                    "Out / 2024": "174",
+                    "Nov / 2024": "159",
+                    "Dez / 2024": "103",
+                    "Jan / 2025": "105",
+                    "Fev / 2025": "139",
+                    "Mar / 2025": "160",
+                    "Abr / 2025": "104",
+                    "Mai / 2025": "163",
+                    "Jun / 2025": "145",
+                    "Jul / 2025": "186",
+                    "Ago / 2025": "8"
+                },
+                "total": "1526"
+            }
+        }
+    )
+
     class Config:
         allow_population_by_field_name = True

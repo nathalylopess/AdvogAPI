@@ -287,3 +287,26 @@ async def get_distribuicoes_unidade(
     except Exception as e:
         logger.error(f"Erro ao processar distribuições da unidade {unit_id}: {str(e)}")
         raise HTTPException(500, f"Erro ao processar distribuições da unidade {unit_id}")
+
+@router.get(
+    "/unidades/{unit_id}/processos_baixados",
+    summary="Processos baixados de uma unidade específica",
+    description="Retorna apenas os dados da tabela de processos baixados nos últimos 12 meses"
+)
+async def get_processos_baixados_unidade(
+    unit_id: int,
+    service: DataService = Depends(get_data_service)
+):
+    try:
+        unit = find_unit_by_id(service.data, unit_id)
+
+        processos_baixados = unit.get("processos_baixados")
+        if not processos_baixados:
+            raise HTTPException(404, f"Dados de 'processos baixados' não encontrados para a unidade {unit_id}")
+
+        return JSONResponse(content=processos_baixados)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Erro ao processar processos baixados da unidade {unit_id}: {str(e)}")
+        raise HTTPException(500, f"Erro ao processar processos baixados da unidade {unit_id}")

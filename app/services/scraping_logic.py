@@ -65,6 +65,9 @@ def process_unit(scraper, index: int) -> Dict:
         console.print("[green]✔ Chamando get_demonstrativo_de_distribuicoes()[/]")
         demonstrativo_de_distribuicoes = get_demonstrativo_de_distribuicoes(scraper)
 
+        console.print("[green]✔ Chamando get_processos_baixados()[/]")
+        baixados = get_processos_baixados(scraper)
+
         console.print(f"[bold green]✔ Coletado:[/] [cyan]{unidade}[/] - [yellow]Acervo:[/] {acervo}")
 
         return {
@@ -77,7 +80,8 @@ def process_unit(scraper, index: int) -> Dict:
             "processos_conclusos_por_tipo": conclusos,
             "controle_de_prisoes": controle_prisoes,
             "controle_de_diligencias": diligencias,
-            "demonstrativo_de_distribuicoes": demonstrativo_de_distribuicoes
+            "demonstrativo_de_distribuicoes": demonstrativo_de_distribuicoes,
+            "processos_baixados": baixados
         }
 
     except StaleElementReferenceException:
@@ -376,7 +380,7 @@ def get_demonstrativo_de_distribuicoes(scraper) -> Dict:
                 "total": total
             }
 
-        # Pega o saldo da última linha (tfoot)
+        # Coleta o saldo da última linha (tfoot)
         saldo_row = rows[-1].find_elements(By.TAG_NAME, "td")
         saldo_mensal = [cell.text.strip() for cell in saldo_row[1:-1]]
         saldo_total = saldo_row[-1].text.strip()
@@ -391,6 +395,47 @@ def get_demonstrativo_de_distribuicoes(scraper) -> Dict:
     except Exception as e:
         console.print(f"[bold yellow]⚠ Aviso:[/] Não foi possível coletar dados de 'Demonstrativo de Distribuições'. Erro: {str(e)}")
         return {}
+    
+def get_processos_baixados(scraper) -> Dict:
+    """Coleta os dados da tabela 'Processos Baixados (últimos 12 meses)'."""
+    baixados = {}
+
+    try:
+        table = wait_for_selenium(
+            scraper.driver,
+            EC.presence_of_element_located((
+                By.XPATH,
+                "//div[contains(@class, 'table-data') and .//div[contains(text(), 'Processos Baixados')]]//table"
+            )),
+            timeout=10,
+            error_msg="Tabela de Processos Baixados não encontrada"
+        )
+
+        # Cabeçalhos (meses e Total)
+        header_cells = table.find_element(By.TAG_NAME, "thead").find_elements(By.TAG_NAME, "th")
+        months = [cell.text.strip() for cell in header_cells[1:]]  # ignora o primeiro cabeçalho vazio
+
+        # Apenas uma linha esperada com rótulo "Baixados"
+        rows = table.find_element(By.TAG_NAME, "tbody").find_elements(By.TAG_NAME, "tr")
+        for row in rows:
+            cells = row.find_elements(By.TAG_NAME, "td")
+            if not cells:
+                continue
+            label = cells[0].text.strip()
+            values = [cell.text.strip() for cell in cells[1:]]
+            if len(values) != len(months):
+                console.print(f"[bold yellow]⚠ Número de valores não bate com cabeçalhos em '{label}'[/]")
+                continue
+
+            baixados[label] = {
+                "mensal": dict(zip(months[:-1], values[:-1])),  # os 12 meses
+                "total": values[-1]  # última célula é o total
+            }
+
+    except Exception as e:
+        console.print(f"[bold red]❌ Erro ao coletar Processos Baixados:[/] {str(e)}")
+
+    return baixados
 
 def parse_processos_data(cells) -> Dict:
     return {
