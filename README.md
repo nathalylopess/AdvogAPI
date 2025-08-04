@@ -108,7 +108,9 @@ Para conseguir utilizar a API, é necessário criar um usuário e autenticar-se.
 3. Clique em "Close" e você estará pronto para utilizar a API.
 <img width="1122" height="814" alt="Image" src="https://github.com/user-attachments/assets/04686061-8e77-4057-9c88-32278d35e4e5" />
 
-### Usando Insomnia
+### Outras interfaces
+
+#### Usando Insomnia
 
 Após executar a API, você pode utilizar também outras interfaces para testá-la, como Insomnia. É especialmente útil para consultar rotas mais pesadas, como a rota `GET /api/v1/unidades`. Basta criar no header (cabeçalho) uma chave **Authorization** com o valor `bearer <seu_token_gerado>`.
 
