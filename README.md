@@ -91,7 +91,7 @@ Para conseguir utilizar a API, é necessário criar um usuário e autenticar-se.
 2. Clique no botão `Try it out`
 <img width="1127" height="407" alt="Image" src="https://github.com/user-attachments/assets/dd1ecde9-ac8f-4b90-968e-429d60da73a5" />
 
-3. Modifique os valores das chaves "username" (nome de usuário) e "password" (senha). No exemplo abaixo, o nome de usuário é "admin" e a senha é "123".
+3. Modifique os valores das chaves **username** (nome de usuário) e **password** (senha). No exemplo abaixo, o nome de usuário é `admin` e a senha é `123`. Mantenha o campo **disabled** como `false`.
 <img width="1127" height="892" alt="Image" src="https://github.com/user-attachments/assets/1250b19c-238a-417a-8d39-fb962b9234c4" />
 
 4. Clique em Execute. Você obterá uma resposta semelhante a esta:
