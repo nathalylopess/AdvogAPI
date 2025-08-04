@@ -204,6 +204,8 @@ async def list_unidades(
 
     try:
         return [transform_unit_data(unit) for unit in service.data]
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar lista de unidades: {str(e)}")
         raise HTTPException(500, "Erro ao processar os dados das unidades")
@@ -214,7 +216,7 @@ async def list_unidades(
     description="Retorna os dados de processos em tramitação para todas as unidades"
 )
 async def get_processos(
-    service: DataService = Depends(get_data_service),
+    service: DataService = Depends(),
     current_user: Cliente = Depends(get_current_active_user)
 ):
     try:
@@ -232,7 +234,9 @@ async def get_processos(
             })
 
         return JSONResponse(content=resultados)
-
+    
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar processos gerais: {str(e)}")
         raise HTTPException(500, "Erro ao processar dados de processos")
@@ -263,6 +267,8 @@ async def get_procedimentos(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar procedimentos gerais: {str(e)}")
         raise HTTPException(500, "Erro ao processar dados de procedimentos/petições")
@@ -293,6 +299,8 @@ async def get_suspensos_arquivo_provisorio(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar dados de suspensos gerais: {str(e)}")
         raise HTTPException(500, "Erro ao processar dados de suspensos/arquivo provisório")
@@ -335,10 +343,12 @@ async def get_processos_conclusos_por_tipo(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar processos conclusos gerais: {str(e)}")
         raise HTTPException(500, "Erro ao processar processos conclusos por tipo")
-
+    
 @router.get(
     "/unidades/controle_de_prisoes",
     summary="Controle de prisões de todas as unidades",
@@ -365,7 +375,9 @@ async def get_controle_de_prisoes(
             raise HTTPException(404, "Nenhum dado de controle de prisões encontrado")
 
         return JSONResponse(content=resultados)
-
+    
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar controle de prisões geral: {str(e)}")
         raise HTTPException(500, "Erro ao processar controle de prisões")
@@ -396,6 +408,8 @@ async def get_controle_de_diligencias(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar controle de diligências geral: {str(e)}")
         raise HTTPException(500, "Erro ao processar controle de diligências")
@@ -426,6 +440,8 @@ async def get_distribuicoes(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar demonstrativo de distribuições geral: {str(e)}")
         raise HTTPException(500, "Erro ao processar distribuições")
@@ -456,6 +472,8 @@ async def get_processos_baixados(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar processos baixados geral: {str(e)}")
         raise HTTPException(500, "Erro ao processar processos baixados")
@@ -486,6 +504,8 @@ async def get_atos_judiciais_proferidos(
 
         return JSONResponse(content=resultados)
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Erro ao processar atos judiciais geral: {str(e)}")
         raise HTTPException(500, "Erro ao processar atos judiciais")
@@ -526,6 +546,7 @@ async def get_processos_unidade(
             for k, v in unit.get("processos_em_tramitacao", {}).items()
         }
         return JSONResponse(content=processos)
+    
     except HTTPException:
         raise
     except Exception as e:
@@ -638,6 +659,7 @@ async def get_controle_de_prisoes(
 
         controle_transformado = transform_controle_de_prisoes(controle)
         return JSONResponse(content=controle_transformado)
+    
     except HTTPException:
         raise
     except Exception as e:
@@ -687,6 +709,7 @@ async def get_distribuicoes_unidade(
             raise HTTPException(404, f"Dados de demonstrativo de distribuições não encontrados para a unidade {unit_id}")
 
         return JSONResponse(content=distrib)
+    
     except HTTPException:
         raise
     except Exception as e:
@@ -711,6 +734,7 @@ async def get_processos_baixados_unidade(
             raise HTTPException(404, f"Dados de 'processos baixados' não encontrados para a unidade {unit_id}")
 
         return JSONResponse(content=processos_baixados)
+    
     except HTTPException:
         raise
     except Exception as e:
@@ -735,6 +759,7 @@ async def get_atos_judiciais_proferidos_unidade(
             raise HTTPException(404, f"A unidade {unit_id} não possui dados de atos judiciais proferidos")
 
         return JSONResponse(content=atos)
+    
     except HTTPException:
         raise
     except Exception as e:
