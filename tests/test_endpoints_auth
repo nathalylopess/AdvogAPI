@@ -1,0 +1,118 @@
+import pytest
+from httpx import AsyncClient
+from fastapi import status
+from app.main import app
+from app.models.user import Cliente
+from app.api.authentication import hash_password
+from sqlmodel import Session
+from app.core.database import get_session
+from unittest.mock import patch, MagicMock
+
+
+@pytest.fixture
+async def client():
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac
+
+@pytest.fixture
+def fake_session():
+    session = MagicMock(spec=Session)
+    return session
+
+@pytest.fixture
+def mock_user():
+    return Cliente(
+        id=1,
+        username="johndoe",
+        hashed_password=hash_password("secret"),
+        disabled=False
+    )
+
+@patch("app.core.database.get_session")
+@patch("app.api.authentication.authenticate_user")
+@patch("app.api.authentication.create_access_token")
+@pytest.mark.asyncio
+def test_login_success(mock_create_token, mock_auth_user, mock_get_session, client, mock_user):
+    mock_get_session.return_value = MagicMock()
+    mock_auth_user.return_value = mock_user
+    mock_create_token.return_value = "fake-jwt-token"
+
+    response = pytest.run(client.post(
+        "/api/v1/auth/token",
+        data={"username": "johndoe", "password": "secret"},
+        headers={"Content-Type": "application/x-www-form-urlencoded"}
+    ))
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == {
+        "access_token": "fake-jwt-token",
+        "token_type": "bearer"
+    }
+
+@patch("app.core.database.get_session")
+@patch("app.api.authentication.authenticate_user")
+@pytest.mark.asyncio
+def test_login_invalid_credentials(mock_auth_user, mock_get_session, client):
+    mock_get_session.return_value = MagicMock()
+    mock_auth_user.return_value = None
+
+    response = pytest.run(client.post(
+        "/api/v1/auth/token",
+        data={"username": "invalid", "password": "wrong"},
+        headers={"Content-Type": "application/x-www-form-urlencoded"}
+    ))
+
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert response.json()["detail"] == "Credenciais inválidas"
+
+@patch("app.core.database.get_session")
+@pytest.mark.asyncio
+def test_criar_usuario_sucesso(mock_get_session, client):
+    mock_session = MagicMock()
+    mock_get_session.return_value = mock_session
+
+    mock_session.exec.return_value.first.return_value = None
+
+    mock_session.add.return_value = None
+    mock_session.commit.return_value = None
+    mock_session.refresh.return_value = None
+
+    usuario = {
+        "username": "newuser",
+        "password": "123456",
+        "disabled": False
+    }
+
+    response = pytest.run(client.post("/api/v1/auth/usuarios", json=usuario))
+
+    assert response.status_code == status.HTTP_201_CREATED
+    assert response.json()["username"] == "newuser"
+
+@patch("app.core.database.get_session")
+@pytest.mark.asyncio
+def test_criar_usuario_ja_existente(mock_get_session, client):
+    mock_session = MagicMock()
+    mock_get_session.return_value = mock_session
+
+    mock_session.exec.return_value.first.return_value = Cliente(username="existinguser", hashed_password="hashed")
+
+    usuario = {
+        "username": "existinguser",
+        "password": "123456",
+        "disabled": False
+    }
+
+    response = pytest.run(client.post("/api/v1/auth/usuarios", json=usuario))
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json()["detail"] == "Usuário já existe"
+
+@patch("app.api.authentication.get_current_active_user")
+@pytest.mark.asyncio
+def test_get_usuario_atual(mock_get_user, client, mock_user):
+    mock_get_user.return_value = mock_user
+
+    response = pytest.run(client.get("/api/v1/auth/usuarios/atual"))
+
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["username"] == "johndoe"
