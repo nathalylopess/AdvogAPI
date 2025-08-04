@@ -84,6 +84,7 @@ e ative o ambiente virtual
 Para conseguir utilizar a API, é necessário criar um usuário e autenticar-se.
 
 ### Criando usuário
+
 1. Clique na rota `POST /api/v1/auth/usuarios Criar novo usuário`
 <img width="1127" height="297" alt="Image" src="https://github.com/user-attachments/assets/4718f974-96bb-4b80-8db7-bb34e499f741" />
 
@@ -94,9 +95,10 @@ Para conseguir utilizar a API, é necessário criar um usuário e autenticar-se.
 <img width="1127" height="892" alt="Image" src="https://github.com/user-attachments/assets/1250b19c-238a-417a-8d39-fb962b9234c4" />
 
 4. Clique em Execute. Você obterá uma resposta semelhante a esta:
-   <img width="1122" height="818" alt="Image" src="https://github.com/user-attachments/assets/ca28a59b-44a6-4bae-a790-a5439f9339b1" />
+<img width="1122" height="818" alt="Image" src="https://github.com/user-attachments/assets/ca28a59b-44a6-4bae-a790-a5439f9339b1" />
 
 ### Autenticando-se
+
 1. Clique no botão Authorize
 <img width="1122" height="618" alt="Image" src="https://github.com/user-attachments/assets/3fc50b33-c396-4a93-86c1-9b9ef57d2629" />
 
